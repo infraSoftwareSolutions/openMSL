@@ -1,6 +1,6 @@
 #pragma once
-#ifndef ELC___CXXETL___CXXUML_CXXDLD_HPP
-#define ELC___CXXETL___CXXUML_CXXDLD_HPP
+#ifndef OPENMSL___MSL___DLD_HPP
+#define OPENMSL___MSL___DLD_HPP
 #include <iostream>
 #include <vector>
 #include <cmath>
@@ -10,7 +10,7 @@
 #include <stdexcept>
 
 /**
- * @file CXXDLD.hpp
+ * @file dld.hpp
  * @brief This header file defines classes for handling data sizes and numeral system conversions.
  * This header file defines classes for handling data sizes and conversions between different numeral systems (decimal, hexadecimal, octal, binary). The `Data` class provides methods for converting between various data size units (bits, nibbles, bytes, words, kilobytes, megabytes, gigabytes, terabytes). The `decimal`, `hexadecimal`, `octal`, and `binary` classes provide functionality for representing and converting between these numeral systems. Each class includes constructors, assignment operators, and methods for performing conversions and displaying information about the data or numeral system. The code also includes error handling for invalid inputs.
  * @author Ali Lafi
@@ -20,7 +20,7 @@
 class hexadecimal;
 class octal;
 class binary;
-namespace etl
+namespace msl
 {
     class Data
     {
@@ -2182,4 +2182,4 @@ namespace etl
             throw std::invalid_argument("Unsupported number of select lines");
     }
 };
-#endif // ELC___CXXETL___CXXUML_CXXDLD_HPP
+#endif // OPENMSL___MSL___DLD_HPP

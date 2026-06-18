@@ -1,0 +1,20 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        // ─── Python (build system) ───────────────────────────────
+        {
+            "name": "Python: build.py",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/build.py",
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "Python: MetaBuild.py",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/MetaBuild.py",
+            "console": "integratedTerminal"
+        }
+    ]
+}

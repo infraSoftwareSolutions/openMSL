@@ -1,0 +1,40 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+
+        // ─── Build via build.py ──────────────────────────────────
+        {
+            "label": "Build: run build.py",
+            "type": "shell",
+            "command": "python",
+            "args": ["build.py"],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "presentation": {
+                "reveal": "always",
+                "panel": "shared"
+            }
+        },
+
+        // ─── PowerShell build ────────────────────────────────────
+        {
+            "label": "PowerShell: PowerBuild",
+            "type": "shell",
+            "command": "powershell",
+            "args": [
+                "-ExecutionPolicy", "Bypass",
+                "-File", "${workspaceFolder}/PowerBuild.psm1"
+            ],
+            "group": "build",
+            "presentation": {
+                "reveal": "always",
+                "panel": "shared"
+            }
+        }
+    ]
+}

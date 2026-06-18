@@ -1,22 +1,22 @@
 #pragma once
-#ifndef ELC___CXXETL___CXXUML_CXXPID_HPP
-#define ELC___CXXETL___CXXUML_CXXPID_HPP
-#include <CXXETL/CXXUDT/CXXBFS.hpp>
-#include "CXXNumerical.hpp"
+#ifndef OPENMSL___MSL___PID_HPP
+#define OPENMSL___MSL___PID_HPP
+#include "openUDT/core/bfs.hpp"
+#include "numerical.hpp"
 #include <map>
 #include <vector>
 #include <functional>
 
 /**
- * @file CXXPID.hpp
+ * @file PID.hpp
  * @brief This file contains the implementation of the P, I, and D controllers, as well as a block controller that can combine them in series or parallel.
  * The P_controller class implements a proportional controller, the I_controller class implements an integral controller, and the D_controller class implements a derivative controller. Each controller has methods to set its parameters, compute its output based on an input function, and store the output values over time. The block_controller class can combine the three controllers in different configurations based on a state form represented by a BFS_16 object.
- * The controllers use the CXXNumerical library for numerical integration and differentiation, and they store their output values in a map for later retrieval. The classes also include operator overloads for assignment and comparison, as well as methods to reset their parameters and output values.
+ * The controllers use the numerical library for numerical integration and differentiation, and they store their output values in a map for later retrieval. The classes also include operator overloads for assignment and comparison, as well as methods to reset their parameters and output values.
  * @author Ali Lafi
  * @date 2024-06
  */
 
-namespace etl
+namespace msl
 {
     class P_controller;
     class I_controller;
@@ -212,7 +212,7 @@ namespace etl
         }
         double compute(double time) noexcept
         {
-            double integral = etl::MulAppTrapRule(time + 0.01, time - 0.01, [this](double t)
+            double integral = MulAppTrapRule(time + 0.01, time - 0.01, [this](double t)
                                                   { return ki * (setpoint - input_function(t)); }, 100);
             output_values[time] = integral;
             return integral;
@@ -295,7 +295,7 @@ namespace etl
     protected:
         double Derivate(std::function<double(double)> f, double x, double h)
         {
-            etl::CFDD<true> derivator;
+            CFDD<true> derivator;
             derivator.set_value(f, h);
             return derivator.FirDer(x / h);
         }
@@ -420,7 +420,7 @@ namespace etl
     class block_controller
     {
     private:
-        etl::BFS_16 state_form; // will indicate the type of the controller and the combination if it sireses or parallel
+        bfs_16 state_form; // will indicate the type of the controller and the combination if it sireses or parallel
         P_controller p_controller;
         I_controller i_controller;
         D_controller d_controller;
@@ -442,4 +442,4 @@ namespace etl
         }
     };
 }
-#endif // ELC___CXXETL___CXXUML_CXXPID_HPP
+#endif // OPENMSL___MSL___PID_HPP

@@ -1,13 +1,13 @@
 #pragma once
-#ifndef ELC___CXXETL___CXXUML_CXXMICROPROCESSOR_HPP
-#define ELC___CXXETL___CXXUML_CXXMICROPROCESSOR_HPP
+#ifndef OPENMSL___MSL___MICROPROCESSOR_HPP
+#define OPENMSL___MSL___MICROPROCESSOR_HPP
 #include <cstdint>
 #include <vector>
-#include <CXXETL/CXXUDT/CXXBFS.hpp>
-#include <CXXETL/CXXUDT/CXXVirtual.hpp>
+#include "openUDT/core/bfs.hpp"
+#include "openUDT/core/virtual.hpp"
 
 /**
- * @file CXXMicroprocessor.hpp
+ * @file microprocessor.hpp
  * @brief This header defines the microprocessor structures for emulating 8085 and 8086 architectures.
  * The emu8085 structure represents the internal state of an 8085 microprocessor, including its registers,
  * program counter, stack pointer, flags, and memory. The emu8086 structure represents the internal state of an 8086 microprocessor,
@@ -16,7 +16,7 @@
  * @date 2024-06
  */
 
-namespace etl
+namespace msl
 {
     class emu8
     {
@@ -43,4 +43,4 @@ namespace etl
     public:
     };
 }
-#endif // ELC___CXXETL___CXXUML_CXXMICROPROCESSOR_HPP
+#endif // OPENMSL___MSL___MICROPROCESSOR_HPP

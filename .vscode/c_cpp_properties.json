@@ -1,0 +1,47 @@
+{
+    "version": 4,
+    "configurations": [
+
+        // ─── C (noen) ───────────────────────────────────────────
+        {
+            "name": "none",
+            "compilerPath": "C:/msys64/ucrt64/bin/gcc.exe",
+            "cStandard": "c17",
+            "intelliSenseMode": "windows-gcc-x64",
+
+            "includePath": [
+                "C:/Users/User/OneDrive/Documents/GitHub",
+                "C:/msys64/ucrt64/include"
+            ],
+
+            "defines": [
+                "_DEBUG",
+                "UNICODE",
+                "_UNICODE",
+                "_WIN64"
+            ],
+
+        },
+
+        // ─── C++ (msl) ──────────────────────────────────────
+        {
+            "name": "msl",
+            "compilerPath": "C:/msys64/ucrt64/bin/g++.exe",
+            "cppStandard": "c++20",
+            "intelliSenseMode": "windows-gcc-x64",
+
+            "includePath": [
+                "C:/Users/User/OneDrive/Documents/GitHub",
+                "C:/msys64/ucrt64/include",
+                "C:/msys64/ucrt64/include/c++/15.2.0"
+            ],
+
+            "defines": [
+                "_DEBUG",
+                "UNICODE",
+                "_UNICODE",
+                "_WIN64"
+            ]
+        }
+    ]
+}

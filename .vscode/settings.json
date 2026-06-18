@@ -1,0 +1,18 @@
+{
+    // File associations
+    "files.associations": {
+        "*.h":   "c",
+        "*.hpp": "cpp",
+        "*.py":  "python"
+    },
+
+    // Exclude unnecessary folders from search
+    "files.exclude": {
+        "**/__pycache__": true,
+        "**/*.class":     true
+    },
+
+    // Editor settings
+    "editor.tabSize": 4,
+    "editor.insertSpaces": true
+}

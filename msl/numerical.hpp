@@ -1,14 +1,15 @@
 #pragma once
-#ifndef ELC___CXXETL___CXXUML_CXXNUMERICAL_HPP
-#define ELC___CXXETL___CXXUML_CXXNUMERICAL_HPP
-#include <CXXETL/CXXLite/CXXIO.hpp>
+#ifndef OPENMSL___MSL___NUMERICAL_HPP
+#define OPENMSL___MSL___NUMERICAL_HPP
+
+#include "metaCore/lite/io.hpp"
 #include <sstream>
 #include <functional>
 #include <cmath>
 #include <numeric>
 
 /**
- * @file CXXNumerical.hpp
+ * @file numerical.hpp
  * @brief This header defines a collection of numerical methods and utilities for root finding, optimization, interpolation, and error analysis.
  * The functions include implementations of the Bisection method, Secant method, False Position method, Newton-Raphson method, Muller's method, Golden Section search, and Newton's method for optimization. Additionally, it provides utilities for calculating errors (absolute and relative) and constructing interpolation polynomials (Newton Divided Difference and Lagrange Interpolating Polynomial).
  * @author Ali Lafi
@@ -16,7 +17,7 @@
  */
 
 #define GR 1.61803 // GR means The Golden Ratio
-namespace etl
+namespace msl
 {
 
     /**
@@ -1387,4 +1388,4 @@ namespace etl
         return solution;
     }
 }
-#endif // ELC_CXX___CXXLHF___CXXUML_CXXNUMERICAL_HPP
+#endif // OPENMSL___MSL___NUMERICAL_HPP

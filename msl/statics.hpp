@@ -1,6 +1,6 @@
 #pragma once
-#ifndef ELC___CXXETL___CXXUML_CXXSTATICS_HPP
-#define ELC___CXXETL___CXXUML_CXXSTATICS_HPP
+#ifndef OPENMSL___MSL___STATICS_HPP
+#define OPENMSL___MSL___STATICS_HPP
 #include <iostream>
 #include <vector>
 #include <string>
@@ -8,7 +8,7 @@
 #include <sstream>
 
 /**
- * @file CXXStatics.hpp
+ * @file statics.hpp
  * @brief A header file containing static functions and a class for handling Cartesian vectors and forces.
  * This file defines a set of mathematical functions for vector operations, as well as a class `CartesianVector`
  * that encapsulates the properties and operations of Cartesian vectors and forces. The class provides methods for
@@ -21,7 +21,7 @@
  */
 
 #define PI 3.14159
-namespace etl
+namespace msl
 {
     constexpr float square(float x) noexcept { return std::pow(x, 2); }
     // convert the degrees to radians
@@ -409,4 +409,4 @@ namespace etl
      */
     constexpr double Moment(double distance, double force) noexcept { return distance * force; }
 }
-#endif // ELC___CXXETL___CXXUML_CXXSTATICS_HPP
+#endif // OPENMSL___MSL___STATICS_HPP

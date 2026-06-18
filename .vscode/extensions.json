@@ -1,0 +1,18 @@
+{
+    "recommendations": [
+
+        // C / C++
+        "ms-vscode.cpptools",
+        "ms-vscode.cpptools-extension-pack",
+
+        // Python (for build.py / MetaBuild.py)
+        "ms-python.python",
+
+        // PowerShell (for PowerBuild.psm1)
+        "ms-vscode.powershell",
+
+        // General utilities
+        "EditorConfig.EditorConfig",
+        "streetsidesoftware.code-spell-checker"
+    ]
+}
