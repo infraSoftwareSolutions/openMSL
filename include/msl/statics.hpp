@@ -20,21 +20,29 @@
  * @date [Date]
  */
 
-#define PI 3.14159
 namespace msl
 {
+
+    const double PI(3.14159);
+
     constexpr float square(float x) noexcept { return std::pow(x, 2); }
+    
     // convert the degrees to radians
     constexpr float toRadians(float degrees) noexcept { return degrees * PI / 180.0; }
+    
     // convert the randians to degrees
     constexpr float todegrees(float radians) noexcept { return (radians * 180.0) / PI; }
+    
     constexpr float CosineLaw(float A, float B, float angleDegrees) noexcept
     {
         float angleRad = toRadians(angleDegrees);
         return sqrt(square(A) + square(B) - 2 * A * B * cos(angleRad));
     }
+
     constexpr float SineLawFindSide(float B, float angleA, float angleB) noexcept { return (B * sin(toRadians(angleA))) / sin(toRadians(angleB)); }
+    
     constexpr float thataSineLaw(float Fr, float F, float Thata) noexcept { return todegrees(asin((F * sin(toRadians(Thata))) / Fr)); }
+    
     /// @brief Class to handle Cartesian Vectors and Forces
     class CartesianVector
     {
@@ -45,6 +53,7 @@ namespace msl
         std::string CartesianForce, RVector;
         // Parses a vector string like "3i+4j+5k"
     protected:
+
         /**
          * @brief Parses a vector string in the format "ai+bj+ck" and extracts the components.
          *

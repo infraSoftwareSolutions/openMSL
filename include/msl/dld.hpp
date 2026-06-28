@@ -12,33 +12,36 @@
 /**
  * @file dld.hpp
  * @brief This header file defines classes for handling data sizes and numeral system conversions.
- * This header file defines classes for handling data sizes and conversions between different numeral systems (decimal, hexadecimal, octal, binary). The `Data` class provides methods for converting between various data size units (bits, nibbles, bytes, words, kilobytes, megabytes, gigabytes, terabytes). The `decimal`, `hexadecimal`, `octal`, and `binary` classes provide functionality for representing and converting between these numeral systems. Each class includes constructors, assignment operators, and methods for performing conversions and displaying information about the data or numeral system. The code also includes error handling for invalid inputs.
+ * This header file defines classes for handling data sizes and conversions between different numeral systems (decimal, hexadecimal, octal, binary). The `data` class provides methods for converting between various data size units (bits, nibbles, bytes, words, kilobytes, megabytes, gigabytes, terabytes). The `decimal`, `hexadecimal`, `octal`, and `binary` classes provide functionality for representing and converting between these numeral systems. Each class includes constructors, assignment operators, and methods for performing conversions and displaying information about the data or numeral system. The code also includes error handling for invalid inputs.
  * @author Ali Lafi
  * @date 2024-06-01
  */
 
-class hexadecimal;
-class octal;
-class binary;
+
 namespace msl
 {
-    class Data
+    class hexadecimal;
+    class octal;
+    class binary;
+    class data
     {
     private:
         float dataSize;
         std::string dataType;
 
     public:
-        Data() noexcept : dataSize(0), dataType("Bits") {}
-        Data(float D) noexcept : dataSize(D) {}
-        Data(const std::string &DT) noexcept : dataType(DT) {}
-        Data(const Data &other) noexcept : dataSize(other.dataSize), dataType(other.dataType) {}
-        Data(float D, const std::string &DT) noexcept : dataSize(D), dataType(DT) {}
+        data() noexcept : dataSize(0), dataType("Bits") {}
+        data(float D) noexcept : dataSize(D) {}
+        data(const std::string &DT) noexcept : dataType(DT) {}
+        data(const data &other) noexcept : dataSize(other.dataSize), dataType(other.dataType) {}
+        data(float D, const std::string &DT) noexcept : dataSize(D), dataType(DT) {}
+        
         void set_values(float D, const std::string &DT) noexcept
         {
             dataSize = D;
             dataType = DT;
         }
+        
         void data_dictionary(char ch = '?') noexcept
         {
             std::cout << "1-Bit = 0 OR 1" << std::endl;
@@ -50,6 +53,7 @@ namespace msl
             std::cout << "1-Giga = 2^30" << std::endl;
             std::cout << "1-Tira = 2^40" << std::endl;
         }
+        
         float To_Bits(float amountOfDat = 1, const char ConDat[20] = "Nibble")
         {
             if (ConDat == "Nibble")
@@ -69,6 +73,7 @@ namespace msl
             else
                 throw std::invalid_argument("wrong data choosing");
         }
+        
         float To_Nibbles(float amountOfDat = 1, const char ConDat[20] = "Byte")
         {
             if (ConDat == "Bits")
@@ -88,6 +93,7 @@ namespace msl
             else
                 throw std::invalid_argument("wrong data choosing");
         }
+
         float To_Bytes(float amountOfDat = 1, const char ConDat[20] = "Word")
         {
             if (ConDat == "Bits")
@@ -107,6 +113,7 @@ namespace msl
             else
                 throw std::invalid_argument("wrong data choosing");
         }
+        
         float To_word(float amountOfDat = 1, const char ConDat[20] = "Killo")
         {
             if (ConDat == "Bits")
@@ -126,6 +133,7 @@ namespace msl
             else
                 throw std::invalid_argument("wrong data choosing");
         }
+
         float To_Killo(float amountOfDat = 1, const char ConDat[20] = "Mega")
         {
             if (ConDat == "Bits")
@@ -145,6 +153,7 @@ namespace msl
             else
                 throw std::invalid_argument("wrong data choosing");
         }
+
         float To_Mega(float amountOfDat = 1, const char ConDat[20] = "Giga")
         {
             if (ConDat == "Bits")
@@ -164,6 +173,7 @@ namespace msl
             else
                 throw std::invalid_argument("wrong data choosing");
         }
+
         float To_Giga(float amountOfDat = 1, const char ConDat[20] = "Tira")
         {
             if (ConDat == "Bits")
@@ -183,6 +193,7 @@ namespace msl
             else
                 throw std::invalid_argument("wrong data choosing");
         }
+
         float To_Tira(float amountOfDat = 1, const char ConDat[20] = "Giga")
         {
             if (ConDat == "Bits")
@@ -202,34 +213,49 @@ namespace msl
             else
                 throw std::invalid_argument("wrong data choosing");
         }
+
         void clear() noexcept
         {
             dataSize = 0;
             dataType = "Bits";
         }
+        
         void display() const
         {
-            std::cout << "Data Size: "
+            std::cout << "data Size: "
                       << dataSize << " "
                       << dataType << std::endl;
         }
-        void operator=(const Data &other) noexcept
+        
+        void operator=(const data &other) noexcept
         {
             dataSize = other.dataSize;
             dataType = other.dataType;
         }
+        
         void operator=(float D) noexcept { dataSize = D; }
+        
         void operator=(const std::string &DT) noexcept { dataType = DT; }
+        
         bool operator==(float D) noexcept { return dataSize == D; }
+        
         bool operator==(const std::string &DT) noexcept { return dataType == DT; }
+        
         bool operator!=(float D) noexcept { return dataSize != D; }
+        
         bool operator!=(const std::string &DT) { return dataType != DT; }
+        
         void operator+=(float D) noexcept { dataSize += D; }
+        
         void operator-=(float D) noexcept { dataSize -= D; }
+        
         void operator*=(float D) noexcept { dataSize *= D; }
+        
         void operator/=(float D) noexcept { dataSize /= D; }
-        ~Data() = default;
+        
+        ~data() = default;
     };
+
     class decimal
     {
     private:
@@ -237,8 +263,11 @@ namespace msl
 
     public:
         decimal() : decNum(0) {}
+        
         decimal(long double num) noexcept : decNum(num) {}
+        
         decimal(const decimal &other) noexcept : decNum(other.decNum) {}
+        
         decimal(const hexadecimal &hex)
         {
             std::string snum = hex.get();
@@ -284,6 +313,7 @@ namespace msl
                 cov *= -1;
             decNum = cov;
         }
+        
         decimal(const octal &oct)
         {
             std::string octStr = oct.get(); // Assuming octal class has a get() method
@@ -322,6 +352,7 @@ namespace msl
             }
             decNum = cov + frac;
         }
+        
         decimal(const binary &bin)
         {
             // Assume binary class has a method get() that returns the binary string
@@ -361,13 +392,17 @@ namespace msl
             }
             decNum = integerPart + fractionalPart;
         }
+        
         void set(long double num) { decNum = num; }
+        
         long double get() const noexcept { return decNum; }
+        
         void base(char ch)
         {
             if (ch == '?' || ch == '!')
                 std::cout << "The base is 10" << std::endl;
         }
+        
         void operator=(const hexadecimal &hex)
         {
             std::string snum = hex.get();
@@ -413,6 +448,7 @@ namespace msl
                 cov *= -1;
             decNum = cov;
         }
+        
         void operator=(const octal &oct)
         {
             std::string octStr = oct.get(); // Assuming octal class has a get() method
@@ -451,6 +487,7 @@ namespace msl
             }
             decNum = cov + frac;
         }
+        
         void operator=(const binary &bin)
         {
             // Assume binary class has a method get() that returns the binary string
@@ -490,156 +527,197 @@ namespace msl
             }
             decNum = integerPart + fractionalPart;
         }
+        
         long double get() const { return decNum; }
+        
         decimal &operator++()
         {
             ++decNum;
             return *this;
         }
+        
         decimal &operator--()
         {
             --decNum;
             return *this;
         }
+        
         const decimal &operator+(const decimal &other) noexcept { return decNum + other.decNum; }
+        
         const decimal &operator-(const decimal &other) noexcept { return decNum - other.decNum; }
+        
         const decimal &operator*(const decimal &other) noexcept { return decNum * other.decNum; }
+        
         const decimal &operator/(const decimal &other) noexcept { return decNum / other.decNum; }
+        
         const decimal &operator+(const hexadecimal &other) noexcept
         {
             decimal temp = other;
             return *this + temp;
         }
+        
         const decimal &operator-(const hexadecimal &other) noexcept
         {
             decimal temp = other;
             return *this - temp;
         }
+        
         const decimal &operator*(const hexadecimal &other) noexcept
         {
             decimal temp = other;
             return *this * temp;
         }
+        
         const decimal &operator/(const hexadecimal &other) noexcept
         {
             decimal temp = other;
             return *this / temp;
         }
+        
         const decimal &operator+(const octal &other) noexcept
         {
             decimal temp = other;
             return *this + temp;
         }
+        
         const decimal &operator-(const octal &other) noexcept
         {
             decimal temp = other;
             return *this - temp;
         }
+        
         const decimal &operator*(const octal &other) noexcept
         {
             decimal temp = other;
             return *this * temp;
         }
+        
         const decimal &operator/(const octal &other) noexcept
         {
             decimal temp = other;
             return *this / temp;
         }
+        
         const decimal &operator+(const binary &other) noexcept
         {
             decimal temp = other;
             return *this + temp;
         }
+        
         const decimal &operator-(const binary &other) noexcept
         {
             decimal temp = other;
             return *this - temp;
         }
+        
         const decimal &operator*(const binary &other) noexcept
         {
             decimal temp = other;
             return *this * temp;
         }
+        
         const decimal &operator/(const binary &other) noexcept
         {
             decimal temp = other;
             return *this / temp;
         }
+        
         void operator+=(const decimal &other) noexcept { decNum += other.decNum; }
+        
         void operator-=(const decimal &other) noexcept { decNum -= other.decNum; }
+        
         void operator*=(const decimal &other) noexcept { decNum *= other.decNum; }
+        
         void operator/=(const decimal &other) noexcept { decNum /= other.decNum; }
+        
         void operator+=(long double num) noexcept { decNum += num; }
+        
         void operator-=(long double num) noexcept { decNum -= num; }
+        
         void operator*=(long double num) noexcept { decNum *= num; }
+        
         void operator/=(long double num)
         {
             if (num == 0)
                 throw std::invalid_argument("Division by zero");
             decNum /= num;
         }
+        
         const decimal &operator+=(const hexadecimal &other) noexcept
         {
             decimal temp = other;
             *this += temp;
         }
+        
         const decimal &operator-=(const hexadecimal &other) noexcept
         {
             decimal temp = other;
             *this -= temp;
         }
+        
         const decimal &operator*=(const hexadecimal &other) noexcept
         {
             decimal temp = other;
             *this *= temp;
         }
+        
         const decimal &operator/=(const hexadecimal &other) noexcept
         {
             decimal temp = other;
             *this /= temp;
         }
+        
         const decimal &operator+=(const octal &other) noexcept
         {
             decimal temp = other;
             *this += temp;
         }
+        
         const decimal &operator-=(const octal &other) noexcept
         {
             decimal temp = other;
             *this -= temp;
         }
+        
         const decimal &operator*=(const octal &other) noexcept
         {
             decimal temp = other;
             *this *= temp;
         }
+        
         const decimal &operator/=(const octal &other) noexcept
         {
             decimal temp = other;
             *this /= temp;
         }
+        
         const decimal &operator+=(const binary &other) noexcept
         {
             decimal temp = other;
             *this += temp;
         }
+        
         const decimal &operator-=(const binary &other) noexcept
         {
             decimal temp = other;
             *this -= temp;
         }
+        
         const decimal &operator*=(const binary &other) noexcept
         {
             decimal temp = other;
             *this *= temp;
         }
+        
         const decimal &operator/=(const binary &other) noexcept
         {
             decimal temp = other;
             *this /= temp;
         }
+        
         void operator=(const decimal &other) noexcept { decNum = other.decNum; }
     };
+
     class hexadecimal
     {
     private:
@@ -664,6 +742,7 @@ namespace msl
 
     public:
         hexadecimal() : hexNum("") {}
+        
         hexadecimal(const std::string &hex)
         {
             hexNum = hex;
@@ -673,6 +752,7 @@ namespace msl
                     throw std::invalid_argument("Invalid hexadecimal input");
             }
         }
+        
         hexadecimal(hexadecimal &hex)
         {
             hexNum = hex.get();
@@ -682,6 +762,7 @@ namespace msl
                     throw std::invalid_argument("Invalid hexadecimal input");
             }
         }
+        
         hexadecimal(const decimal &dec)
         {
             float decValue = dec.get();
@@ -703,6 +784,7 @@ namespace msl
             std::reverse(result.begin(), result.end());
             hexNum = result;
         }
+        
         hexadecimal(int num)
         {
             hexNum = std::to_string(num);
@@ -712,6 +794,7 @@ namespace msl
                     throw std::invalid_argument("Invalid hexadecimal input");
             }
         }
+        
         void set(const std::string &hex)
         {
             hexNum = hex;
@@ -721,17 +804,22 @@ namespace msl
                     throw std::invalid_argument("Invalid hexadecimal input");
             }
         }
+        
         std::string get() const noexcept { return hexNum; }
+        
         void clear() noexcept
         {
             hexNum.clear();
         }
+        
         void base(char ch)
         {
             if (ch == '?' || ch == '!')
                 std::cout << "The base is 16" << std::endl;
         }
+        
         bool empty() const noexcept { return hexNum.empty(); }
+        
         void operator=(octal &oct) const
         {
             if (hexNum.empty())
@@ -769,6 +857,7 @@ namespace msl
             }
             std::cout << octalValue << std::endl;
         }
+        
         float operator=(binary &bin) const
         {
             if (hexNum.empty())
@@ -806,6 +895,7 @@ namespace msl
             }
             return binaryValue;
         }
+        
         hexadecimal &operator=(decimal &dec)
         {
             float decValue = dec.get();
@@ -831,12 +921,14 @@ namespace msl
             hexNum = result;
             return *this;
         }
+        
         void operator=(hexadecimal &hex)
         {
             if (hexNum.empty())
                 throw std::invalid_argument("No hexadecimal value provided");
             hexNum = hex.get();
         }
+        
         hexadecimal &operator++()
         {
             if (hexNum.empty())
@@ -879,6 +971,7 @@ namespace msl
                 hexNum = "1" + hexNum;
             return *this;
         }
+        
         hexadecimal &operator--()
         {
             if (hexNum.empty())
@@ -921,6 +1014,7 @@ namespace msl
                 hexNum = "F" + hexNum;
             return *this;
         }
+        
         hexadecimal operator+(const hexadecimal &hex) const
         {
             if (hexNum.empty())
@@ -932,6 +1026,7 @@ namespace msl
             result = sumDec;
             return result;
         }
+        
         hexadecimal operator-(const hexadecimal &hex) const
         {
             if (hexNum.empty())
@@ -943,6 +1038,7 @@ namespace msl
             result = diffDec;
             return result;
         }
+        
         hexadecimal operator*(const hexadecimal &hex) const
         {
             if (hexNum.empty())
@@ -954,6 +1050,7 @@ namespace msl
             result = prodDec;
             return result;
         }
+        
         hexadecimal operator/(const hexadecimal &hex) const
         {
             if (hexNum.empty())
@@ -967,6 +1064,7 @@ namespace msl
             result = quotDec;
             return result;
         }
+        
         void operator+=(const hexadecimal &hex)
         {
             if (hexNum.empty())
@@ -974,6 +1072,7 @@ namespace msl
             hexadecimal tempHex(hex.get());
             *this += tempHex;
         }
+        
         void operator-=(const hexadecimal &hex)
         {
             if (hexNum.empty())
@@ -981,6 +1080,7 @@ namespace msl
             hexadecimal tempHex(hex.get());
             *this -= tempHex;
         }
+        
         void operator*=(const hexadecimal &hex)
         {
             if (hexNum.empty())
@@ -988,6 +1088,7 @@ namespace msl
             hexadecimal tempHex(hex.get());
             *this *= tempHex;
         }
+        
         void operator/=(const hexadecimal &hex)
         {
             if (hexNum.empty())
@@ -995,8 +1096,10 @@ namespace msl
             hexadecimal tempHex(hex.get());
             *this /= tempHex;
         }
+        
         ~hexadecimal() = default;
     };
+
     class octal
     {
     private:
@@ -1004,6 +1107,7 @@ namespace msl
 
     public:
         octal() : octNum("") {}
+        
         octal(int num)
         {
             octNum = std::to_string(num);
@@ -1016,6 +1120,7 @@ namespace msl
                 }
             }
         }
+        
         octal(const std::string &oct)
         {
             octNum = oct;
@@ -1028,6 +1133,7 @@ namespace msl
                 }
             }
         }
+        
         void set(const std::string &oct)
         {
             octNum = oct;
@@ -1040,23 +1146,28 @@ namespace msl
                 }
             }
         }
+        
         std::string get() const noexcept
         {
             return octNum;
         }
+        
         void base(char ch)
         {
             if (ch == '?' || ch == '!')
                 std::cout << "The base is 8" << std::endl;
         }
+        
         bool empty() const
         {
             return octNum.empty();
         }
+        
         void clear() noexcept
         {
             octNum.clear();
         }
+        
         void operator=(binary &bin) const
         {
             if (octNum.empty())
@@ -1088,6 +1199,7 @@ namespace msl
             // You may want to set this value to a member or print it, depending on your design
             std::cout << binaryValue << std::endl;
         }
+        
         void operator=(decimal &dec) const
         {
             if (octNum.empty())
@@ -1105,6 +1217,7 @@ namespace msl
             }
             dec.set(static_cast<float>(decimalValue));
         }
+
         void operator=(hexadecimal &hex)
         {
             if (octNum.empty())
@@ -1140,12 +1253,14 @@ namespace msl
             }
             hex.set(hexValue);
         }
+        
         void operator=(octal &oct)
         {
             if (octNum.empty())
                 throw std::invalid_argument("No octal value provided");
             octNum = oct.get();
         }
+        
         octal &operator++()
         {
             if (octNum.empty())
@@ -1177,6 +1292,7 @@ namespace msl
                 octNum = "1" + octNum;
             return *this;
         }
+        
         octal &operator--()
         {
             if (octNum.empty())
@@ -1208,6 +1324,7 @@ namespace msl
                 octNum = "7" + octNum;
             return *this;
         }
+        
         octal operator+(const octal &oct) const
         {
             if (octNum.empty())
@@ -1221,6 +1338,7 @@ namespace msl
             result = sumDec;
             return result;
         }
+        
         octal operator-(const octal &oct) const
         {
             if (octNum.empty())
@@ -1234,6 +1352,7 @@ namespace msl
             result = diffDec;
             return result;
         }
+        
         octal operator*(const octal &oct) const
         {
             if (octNum.empty())
@@ -1247,6 +1366,7 @@ namespace msl
             result = prodDec;
             return result;
         }
+        
         octal operator/(const octal &oct) const
         {
             if (octNum.empty())
@@ -1262,6 +1382,7 @@ namespace msl
             result = quotDec;
             return result;
         }
+        
         void operator+=(const octal &oct)
         {
             if (octNum.empty())
@@ -1269,6 +1390,7 @@ namespace msl
             octal tempOct(oct.get());
             *this += tempOct;
         }
+        
         void operator-=(const octal &oct)
         {
             if (octNum.empty())
@@ -1276,6 +1398,7 @@ namespace msl
             octal tempOct(oct.get());
             *this -= tempOct;
         }
+        
         void operator*=(const octal &oct)
         {
             if (octNum.empty())
@@ -1283,6 +1406,7 @@ namespace msl
             octal tempOct(oct.get());
             *this *= tempOct;
         }
+        
         void operator/=(const octal &oct)
         {
             if (octNum.empty())
@@ -1290,8 +1414,10 @@ namespace msl
             octal tempOct(oct.get());
             *this /= tempOct;
         }
+
         ~octal() = default;
     };
+
     class binary
     {
     private:
@@ -1299,7 +1425,9 @@ namespace msl
         std::string binNum;
 
     public:
+
         binary() : bin(""), binNum("") {}
+
         binary(const std::string &bincode)
         {
             bin = bincode;
@@ -1309,6 +1437,7 @@ namespace msl
                 throw std::invalid_argument("Invalid binary input");
             }
         }
+
         binary(int bincode)
         {
             binNum = std::to_string(bincode);
@@ -1318,6 +1447,7 @@ namespace msl
                 throw std::invalid_argument("Invalid binary input");
             }
         }
+
         void set(const std::string &bincode)
         {
             bin = bincode;
@@ -1327,10 +1457,12 @@ namespace msl
                 throw std::invalid_argument("Invalid binary input");
             }
         }
+
         std::string get() const noexcept
         {
             return bin.empty() ? binNum : bin;
         }
+
         bool binary_test(const std::string &bincode)
         {
             for (char ch : bincode)
@@ -1340,20 +1472,24 @@ namespace msl
             }
             return true;
         }
+
         bool empty() const
         {
             return bin.empty() && binNum.empty();
         }
+
         void clear() noexcept
         {
             bin.clear();
             binNum.clear();
         }
+
         void base(char ch)
         {
             if (ch == '?' || ch == '!')
                 std::cout << "The base is 2" << std::endl;
         }
+
         // true ~~> positive || false ~~> negative
         std::string onesComplement(std::string bincode, bool numsing = true)
         {
@@ -1371,6 +1507,7 @@ namespace msl
             reverse(resultCode.begin(), resultCode.end());
             return resultCode;
         }
+
         std::string twosComplement(std::string bincode)
         {
             if (bincode.empty())
@@ -1406,6 +1543,7 @@ namespace msl
                 bincode = "1" + bincode;
             return bincode;
         }
+
         void operator=(decimal &dec) const
         {
             if (bin.empty() && binNum.empty())
@@ -1443,6 +1581,7 @@ namespace msl
 
             dec.set(decimalValue);
         }
+
         void operator=(octal &oct)
         {
             if (bin.empty() && binNum.empty())
@@ -1475,6 +1614,7 @@ namespace msl
             }
             oct.set(octalValue);
         }
+
         void operator=(hexadecimal &hex)
         {
             if (bin.empty() && binNum.empty())
@@ -1514,12 +1654,14 @@ namespace msl
             }
             hex.set(hexValue);
         }
+
         void operator=(binary &binObj)
         {
             if (bin.empty() && binNum.empty())
                 throw std::invalid_argument("No binary value provided");
             binObj.set(bin.empty() ? binNum : bin);
         }
+
         binary &operator++()
         {
             if (bin.empty() && binNum.empty())
@@ -1552,6 +1694,7 @@ namespace msl
                 binNum = targetBin;
             return *this;
         }
+
         binary &operator--()
         {
             if (bin.empty() && binNum.empty())
@@ -1584,6 +1727,7 @@ namespace msl
                 binNum = targetBin;
             return *this;
         }
+
         binary operator+(const binary &binObj) const
         {
             if (bin.empty() && binNum.empty())
@@ -1597,6 +1741,7 @@ namespace msl
             result = sumDec;
             return result;
         }
+
         binary operator-(const binary &binObj) const
         {
             if (bin.empty() && binNum.empty())
@@ -1610,6 +1755,7 @@ namespace msl
             result = diffDec;
             return result;
         }
+
         binary operator*(const binary &binObj) const
         {
             if (bin.empty() && binNum.empty())
@@ -1623,6 +1769,7 @@ namespace msl
             result = prodDec;
             return result;
         }
+
         binary operator/(const binary &binObj) const
         {
             if (bin.empty() && binNum.empty())
@@ -1638,6 +1785,7 @@ namespace msl
             result = quotDec;
             return result;
         }
+
         void operator+=(const binary &binObj)
         {
             if (bin.empty() && binNum.empty())
@@ -1645,6 +1793,7 @@ namespace msl
             binary tempBin(binObj.get());
             *this += tempBin;
         }
+
         void operator-=(const binary &binObj)
         {
             if (bin.empty() && binNum.empty())
@@ -1652,6 +1801,7 @@ namespace msl
             binary tempBin(binObj.get());
             *this -= tempBin;
         }
+
         void operator*=(const binary &binObj)
         {
             if (bin.empty() && binNum.empty())
@@ -1659,6 +1809,7 @@ namespace msl
             binary tempBin(binObj.get());
             *this *= tempBin;
         }
+
         void operator/=(const binary &binObj)
         {
             if (bin.empty() && binNum.empty())
@@ -1666,8 +1817,10 @@ namespace msl
             binary tempBin(binObj.get());
             *this /= tempBin;
         }
+
         ~binary() = default;
     };
+
     std::string to_hex(int num) noexcept
     {
         float fnum = num;
@@ -1696,6 +1849,7 @@ namespace msl
             result += Newstr[j];
         return result;
     }
+
     int to_oct(int num) noexcept
     {
         int count = 0;
@@ -1705,6 +1859,7 @@ namespace msl
             count = ((num / 8) * 10 + (num % 8));
         return count;
     }
+
     int to_binary(int num) noexcept
     {
         int base = 1, count = 0;
@@ -1723,6 +1878,7 @@ namespace msl
         }
         return count;
     }
+
     bool binary_test(std::string bincode) noexcept
     {
         for (int i = 0; i < bincode.length(); i++)
@@ -1732,6 +1888,7 @@ namespace msl
         }
         return true;
     }
+
     std::string reverse(std::string result) noexcept
     {
         std::string NewRes;
@@ -1740,6 +1897,7 @@ namespace msl
             NewRes += result[i];
         return NewRes;
     }
+
     std::string ToBCD(int num) noexcept
     {
         std::string result;
@@ -1769,6 +1927,7 @@ namespace msl
         }
         return result;
     }
+
     std::string Excess_3(int num) noexcept
     {
         int NewNum;
@@ -1800,6 +1959,7 @@ namespace msl
         }
         return result;
     }
+
     std::string code_2421(int num) noexcept
     {
         std::string result;
@@ -1829,6 +1989,7 @@ namespace msl
         }
         return result;
     }
+
     std::string code_8421(int num) noexcept
     {
         std::string result;
@@ -1858,6 +2019,7 @@ namespace msl
         }
         return result;
     }
+
     std::string Gray_code(std::string bincode) noexcept
     {
         size_t binlen = bincode.length();
@@ -1876,12 +2038,14 @@ namespace msl
         }
         return resultCode;
     }
+
     std::string ASCII(char ch) noexcept
     {
         int ChNum = ch;
         int result_code = to_binary(ChNum);
         return std::to_string(result_code);
     }
+    
     std::string Error_Detecting_code(std::string bincode, bool evenParity = true) noexcept
     {
         if (!binary_test(bincode))
@@ -1912,274 +2076,6 @@ namespace msl
             result += bincode;
         }
         return result;
-    }
-    bool AND(bool A, bool B) noexcept
-    {
-        return (A && B);
-    }
-    bool OR(bool A, bool B) noexcept
-    {
-        return (A || B);
-    }
-    bool NAND(bool A, bool B) noexcept
-    {
-        if (A == true && B == true)
-            return false;
-        else
-            return true;
-    }
-    bool NOR(bool A, bool B) noexcept
-    {
-        return !(A || B);
-    }
-    bool XOR(bool A, bool B) noexcept
-    {
-        if ((A == false && B == false) || (A == true && B == true))
-            return false;
-        else
-            return true;
-    }
-    bool XNOR(bool A, bool B) noexcept
-    {
-        return !(XOR(A, B));
-    }
-    std::string HalfAdder(bool A, bool B) noexcept
-    {
-        return std::to_string(A && B) + std::to_string(XOR(A, B));
-    }
-    std::string HalfSub(bool A, bool B) noexcept
-    {
-        return std::to_string(XOR(A, B)) + std::to_string((!A) && B);
-    }
-    std::string FullAdder(bool A, bool B, bool C) noexcept
-    {
-        bool sum = XOR(XOR(A, B), C); // Correct Sum calculation
-        // Correct Carry Out calculation: (A AND B) OR (C AND (A XOR B))
-        bool carry_out = (A && B) || (C && XOR(A, B));
-        return std::to_string(sum) + std::to_string(carry_out);
-    }
-    std::string FullSub(bool A, bool B, bool C) noexcept
-    {
-        bool diff = XOR(XOR(A, B), C); // Correct Difference calculation
-        // Correct Borrow Out calculation: (NOT A AND B) OR (C AND (NOT (A XOR B)))
-        bool borrow_out = (!A && B) || (C && !(XOR(A, B)));
-        return std::to_string(diff) + std::to_string(borrow_out);
-    }
-    // 2x4 Decoder
-    std::string Decoder2x4(bool A, bool B) noexcept // bool >>> 1 = true || 0 = false
-    {
-        std::string result = "0000";
-        int index = (A << 1) | B; // Convert A and B to an index (0-3)
-        result[index] = '1';      // Set the corresponding output to '1'
-        return result;
-    }
-    // 3x8 Decoder
-    std::string Decoder3x8(bool A, bool B, bool C) noexcept
-    {
-        std::string result = "00000000";
-        int index = (A << 2) | (B << 1) | C; // Convert A, B, and C to an index (0-7)
-        result[index] = '1';                 // Set the corresponding output to '1'
-        return result;
-    }
-    // 4x16 Decoder
-    std::string Decoder4x16(bool A, bool B, bool C, bool D) noexcept
-    {
-        std::string result = "0000000000000000";
-        int index = (A << 3) | (B << 2) | (C << 1) | D; // Convert A, B, C, and D to an index (0-15)
-        result[index] = '1';                            // Set the corresponding output to '1'
-        return result;
-    }
-    std::string Decoder(std::string binInput)
-    {
-        if (!binary_test(binInput))
-            throw std::invalid_argument("Invalid binary input");
-        if (binInput.length() < 1 || binInput.length() > 4)
-            throw std::invalid_argument("Input length must be between 1 and 4");
-        if (binInput.length() == 2)
-            return Decoder2x4(binInput[0] == '1', binInput[1] == '1');
-        else if (binInput.length() == 3)
-            return Decoder3x8(binInput[0] == '1', binInput[1] == '1', binInput[2] == '1');
-        else if (binInput.length() == 4)
-            return Decoder4x16(binInput[0] == '1', binInput[1] == '1', binInput[2] == '1', binInput[3] == '1');
-        else
-            throw std::invalid_argument("Unsupported input length");
-    }
-    std::string Encoder4x2(std::string input)
-    {
-        if (input.length() != 4 || !binary_test(input))
-            throw std::invalid_argument("Input must be a 4-bit binary string");
-        int index = -1;
-        for (int i = 0; i < 4; ++i)
-        {
-            if (input[i] == '1')
-            {
-                if (index != -1)
-                    throw std::invalid_argument("Multiple active inputs detected");
-                index = i;
-            }
-        }
-        if (index == -1)
-            throw std::invalid_argument("No active input detected");
-        return std::to_string((index >> 1) & 1) + std::to_string(index & 1);
-    }
-    std::string Encoder8x3(std::string input)
-    {
-        if (input.length() != 8 || !binary_test(input))
-            throw std::invalid_argument("Input must be an 8-bit binary string");
-        int index = -1;
-        for (int i = 0; i < 8; ++i)
-        {
-            if (input[i] == '1')
-            {
-                if (index != -1)
-                    throw std::invalid_argument("Multiple active inputs detected");
-                index = i;
-            }
-        }
-        if (index == -1)
-            throw std::invalid_argument("No active input detected");
-        return std::to_string((index >> 2) & 1) + std::to_string((index >> 1) & 1) + std::to_string(index & 1);
-    }
-    std::string Encoder16x4(std::string input)
-    {
-        if (input.length() != 16 || !binary_test(input))
-            throw std::invalid_argument("Input must be a 16-bit binary string");
-        int index = -1;
-        for (int i = 0; i < 16; ++i)
-        {
-            if (input[i] == '1')
-            {
-                if (index != -1)
-                    throw std::invalid_argument("Multiple active inputs detected");
-                index = i;
-            }
-        }
-        if (index == -1)
-            throw std::invalid_argument("No active input detected");
-        return std::to_string((index >> 3) & 1) + std::to_string((index >> 2) & 1) + std::to_string((index >> 1) & 1) + std::to_string(index & 1);
-    }
-    std::string Encoder(std::string binInput)
-    {
-        if (!binary_test(binInput))
-            throw std::invalid_argument("Invalid binary input");
-        if (binInput.length() < 2 || binInput.length() > 16)
-            throw std::invalid_argument("Input length must be between 2 and 16");
-        if (binInput.length() == 4)
-            return Encoder4x2(binInput);
-        else if (binInput.length() == 8)
-            return Encoder8x3(binInput);
-        else if (binInput.length() == 16)
-            return Encoder16x4(binInput);
-        else
-            throw std::invalid_argument("Unsupported input length");
-    }
-    std::string Multiplexer2x1(bool A, bool B, bool sel) // A , B = inputs | sel = select line
-    {
-        return sel ? std::to_string(B) : std::to_string(A);
-    }
-    std::string Multiplexer4x1(bool A, bool B, bool C, bool D, bool sel1, bool sel2)
-    {
-        int index = (sel1 << 1) | sel2; // Convert select lines to an index (0-3)
-        switch (index)
-        {
-        case 0:
-            return std::to_string(A);
-        case 1:
-            return std::to_string(B);
-        case 2:
-            return std::to_string(C);
-        case 3:
-            return std::to_string(D);
-        default:
-            throw std::invalid_argument("Invalid select lines");
-        }
-    }
-    std::string Multiplexer8x1(bool A, bool B, bool C, bool D, bool E, bool F, bool G, bool H, bool sel1, bool sel2, bool sel3)
-    {
-        int index = (sel1 << 2) | (sel2 << 1) | sel3; // Convert select lines to an index (0-7)
-        switch (index)
-        {
-        case 0:
-            return std::to_string(A);
-        case 1:
-            return std::to_string(B);
-        case 2:
-            return std::to_string(C);
-        case 3:
-            return std::to_string(D);
-        case 4:
-            return std::to_string(E);
-        case 5:
-            return std::to_string(F);
-        case 6:
-            return std::to_string(G);
-        case 7:
-            return std::to_string(H);
-        default:
-            throw std::invalid_argument("Invalid select lines");
-        }
-    }
-    std::string Multiplexer16x1(bool A, bool B, bool C, bool D, bool E, bool F, bool G, bool H, bool I, bool J, bool K, bool L, bool M, bool N, bool O, bool P, bool sel1, bool sel2, bool sel3, bool sel4)
-    {
-        int index = (sel1 << 3) | (sel2 << 2) | (sel3 << 1) | sel4; // Convert select lines to an index (0-15)
-        switch (index)
-        {
-        case 0:
-            return std::to_string(A);
-        case 1:
-            return std::to_string(B);
-        case 2:
-            return std::to_string(C);
-        case 3:
-            return std::to_string(D);
-        case 4:
-            return std::to_string(E);
-        case 5:
-            return std::to_string(F);
-        case 6:
-            return std::to_string(G);
-        case 7:
-            return std::to_string(H);
-        case 8:
-            return std::to_string(I);
-        case 9:
-            return std::to_string(J);
-        case 10:
-            return std::to_string(K);
-        case 11:
-            return std::to_string(L);
-        case 12:
-            return std::to_string(M);
-        case 13:
-            return std::to_string(N);
-        case 14:
-            return std::to_string(O);
-        case 15:
-            return std::to_string(P);
-        default:
-            throw std::invalid_argument("Invalid select lines");
-        }
-    }
-    std::string Multiplexer(std::string binInput, std::vector<bool> inputs)
-    {
-        if (!binary_test(binInput))
-            throw std::invalid_argument("Invalid binary input");
-        int numSelectLines = binInput.length();
-        int numInputs = 1 << numSelectLines; // 2^numSelectLines
-        if (inputs.size() != numInputs)
-            throw std::invalid_argument("Number of inputs does not match select lines");
-        if (numSelectLines == 1)
-            return Multiplexer2x1(inputs[0], inputs[1], binInput[0] == '1');
-        else if (numSelectLines == 2)
-            return Multiplexer4x1(inputs[0], inputs[1], inputs[2], inputs[3], binInput[0] == '1', binInput[1] == '1');
-        else if (numSelectLines == 3)
-            return Multiplexer8x1(inputs[0], inputs[1], inputs[2], inputs[3], inputs[4], inputs[5], inputs[6], inputs[7], binInput[0] == '1', binInput[1] == '1', binInput[2] == '1');
-        else if (numSelectLines == 4)
-            return Multiplexer16x1(inputs[0], inputs[1], inputs[2], inputs[3], inputs[4], inputs[5], inputs[6], inputs[7],
-                                   inputs[8], inputs[9], inputs[10], inputs[11], inputs[12], inputs[13], inputs[14], inputs[15],
-                                   binInput[0] == '1', binInput[1] == '1', binInput[2] == '1', binInput[3] == '1');
-        else
-            throw std::invalid_argument("Unsupported number of select lines");
     }
 };
 #endif // OPENMSL___MSL___DLD_HPP

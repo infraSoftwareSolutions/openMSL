@@ -10,7 +10,8 @@
             "intelliSenseMode": "windows-gcc-x64",
 
             "includePath": [
-                "C:/Users/User/OneDrive/Documents/GitHub",
+                "C:/Users/User/OneDrive/Documents/GitHub/openUDT/include",
+                "C:/Users/User/OneDrive/Documents/GitHub/metaCore/include",
                 "C:/msys64/ucrt64/include"
             ],
 
@@ -31,7 +32,8 @@
             "intelliSenseMode": "windows-gcc-x64",
 
             "includePath": [
-                "C:/Users/User/OneDrive/Documents/GitHub",
+                "C:/Users/User/OneDrive/Documents/GitHub/openUDT/include",
+                "C:/Users/User/OneDrive/Documents/GitHub/metaCore/include",
                 "C:/msys64/ucrt64/include",
                 "C:/msys64/ucrt64/include/c++/15.2.0"
             ],

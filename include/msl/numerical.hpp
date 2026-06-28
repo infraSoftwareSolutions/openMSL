@@ -2,7 +2,7 @@
 #ifndef OPENMSL___MSL___NUMERICAL_HPP
 #define OPENMSL___MSL___NUMERICAL_HPP
 
-#include "metaCore/lite/io.hpp"
+#include "meta/lite/io.hpp"
 #include <sstream>
 #include <functional>
 #include <cmath>
@@ -16,9 +16,10 @@
  * @date 2024-06
  */
 
-#define GR 1.61803 // GR means The Golden Ratio
 namespace msl
 {
+    
+    const double GR(1.61803); // GR means The Golden Ratio
 
     /**
      * @brief Calculates the Absolute True Error (ATE) between a true value and an approximate value.
@@ -142,14 +143,14 @@ namespace msl
     {
         if (Xl > Xu)
         {
-            io::println_error("Error: Lower bound is greater than upper bound.");
+            meta::lite::io::println_error("Error: Lower bound is greater than upper bound.");
             return NAN;
         }
         float Fx_l = f(Xl);
         float Fx_u = f(Xu);
         if (Fx_l * Fx_u > 0)
         {
-            io::println_error("Error: No sign change in the interval. Bisection method may not converge.");
+            meta::lite::io::println_error("Error: No sign change in the interval. Bisection method may not converge.");
             return NAN;
         }
         float Xr = Xl;
@@ -204,7 +205,7 @@ namespace msl
             float Fxi_1 = f(Xi_1);
             if (Fxi == Fxi_1)
             {
-                io::println_error("Division by zero in Secant Method. (f(Xi) == f(Xi-1))");
+                meta::lite::io::println_error("Division by zero in Secant Method. (f(Xi) == f(Xi-1))");
                 return Xi;
             }
             Xi_new = Xi - Fxi * ((Xi - Xi_1) / (Fxi - Fxi_1));
@@ -246,7 +247,7 @@ namespace msl
         float Fx_l = f(Xl), Fx_u = f(Xu), Fx_r;
         if (Xl > Xu)
         {
-            io::println_error("Error: the lower value is greater than the upper value.");
+            meta::lite::io::println_error("Error: the lower value is greater than the upper value.");
             return -1;
         }
         for (int i = 0; i < iteration; i++)
@@ -385,10 +386,10 @@ namespace msl
             double Fx0 = f(X0);
             double Fx1 = f(X1);
             double Fx2 = f(X2);
-            double δ0 = (Fx1 - Fx0) / H0;
-            double δ1 = (Fx2 - Fx1) / H1;
-            double a = (δ1 - δ0) / (H1 + H0);
-            double b = a * H1 + δ1;
+            double d0 = (Fx1 - Fx0) / H0;
+            double d1 = (Fx2 - Fx1) / H1;
+            double a = (d1 - d0) / (H1 + H0);
+            double b = a * H1 + d1;
             double c = Fx2;
             double discriminant = b * b - 4 * a * c;
             if (discriminant < 0)
@@ -628,7 +629,7 @@ namespace msl
         {
             if (H <= 0)
             {
-                io::println_error("Interval must be positive");
+                meta::lite::io::println_error("Interval must be positive");
                 return;
             }
             Fx = F;
@@ -647,12 +648,12 @@ namespace msl
         {
             if (!function_based)
             {
-                io::println_error("Function-based mode is not enabled");
+                meta::lite::io::println_error("Function-based mode is not enabled");
                 return;
             }
             if (H <= 0)
             {
-                io::println_error("Interval must be positive");
+                meta::lite::io::println_error("Interval must be positive");
                 return;
             }
             Fx = F;
@@ -671,24 +672,24 @@ namespace msl
         {
             if (h <= 0 && !function_based)
             {
-                io::println_error("The interval is zero or negative");
+                meta::lite::io::println_error("The interval is zero or negative");
                 return -1.0;
             }
             if (Fx.empty() && !function_based)
             {
-                io::println_error("Values must be set before computing the first derivative");
+                meta::lite::io::println_error("Values must be set before computing the first derivative");
                 return -1.0;
             }
             if (i + 1 >= Fx.size() && !function_based)
             {
-                io::println_error("Index out of range for first derivative");
+                meta::lite::io::println_error("Index out of range for first derivative");
                 return -1.0;
             }
             if (function_based)
             {
                 if (i < 0)
                 {
-                    io::println_error("Index cannot be negative for function-based derivative");
+                    meta::lite::io::println_error("Index cannot be negative for function-based derivative");
                     return -1.0;
                 }
                 // Use the function to compute the first derivative
@@ -710,24 +711,24 @@ namespace msl
         {
             if (h <= 0)
             {
-                io::println_error("The interval is zero or negative");
+                meta::lite::io::println_error("The interval is zero or negative");
                 return -1.0;
             }
             if (Fx.empty())
             {
-                io::println_error("Values must be set before computing the second derivative");
+                meta::lite::io::println_error("Values must be set before computing the second derivative");
                 return -1.0;
             }
             if (i + 2 >= Fx.size())
             {
-                io::println_error("Index out of range for second derivative");
+                meta::lite::io::println_error("Index out of range for second derivative");
                 return -1.0;
             }
             if (function_based)
             {
                 if (i < 0)
                 {
-                    io::println_error("Index cannot be negative for function-based derivative");
+                    meta::lite::io::println_error("Index cannot be negative for function-based derivative");
                     return -1.0;
                 }
                 // Use the function to compute the second derivative
@@ -749,24 +750,24 @@ namespace msl
         {
             if (h <= 0)
             {
-                io::println_error("The interval is zero or negative");
+                meta::lite::io::println_error("The interval is zero or negative");
                 return -1.0;
             }
             if (Fx.empty())
             {
-                io::println_error("Values must be set before computing the third derivative");
+                meta::lite::io::println_error("Values must be set before computing the third derivative");
                 return -1.0;
             }
             if (i + 3 >= Fx.size())
             {
-                io::println_error("Index out of range for third derivative");
+                meta::lite::io::println_error("Index out of range for third derivative");
                 return -1.0;
             }
             if (function_based)
             {
                 if (i < 0)
                 {
-                    io::println_error("Index cannot be negative for function-based derivative");
+                    meta::lite::io::println_error("Index cannot be negative for function-based derivative");
                     return -1.0;
                 }
                 // Use the function to compute the third derivative
@@ -798,7 +799,7 @@ namespace msl
         {
             if (H <= 0)
             {
-                io::println_error("Interval must be positive");
+                meta::lite::io::println_error("Interval must be positive");
                 return;
             }
             Fx = F;
@@ -817,12 +818,12 @@ namespace msl
         {
             if (!function_based)
             {
-                io::println_error("Function-based mode is not enabled");
+                meta::lite::io::println_error("Function-based mode is not enabled");
                 return;
             }
             if (H <= 0)
             {
-                io::println_error("Interval must be positive");
+                meta::lite::io::println_error("Interval must be positive");
                 return;
             }
             Fx = F;
@@ -841,24 +842,24 @@ namespace msl
         {
             if (h <= 0)
             {
-                io::println_error("The interval is zero or negative");
+                meta::lite::io::println_error("The interval is zero or negative");
                 return -1.0;
             }
             if (Fx.empty())
             {
-                io::println_error("Values must be set before computing the first derivative");
+                meta::lite::io::println_error("Values must be set before computing the first derivative");
                 return -1.0;
             }
             if (i - 1 < 0)
             {
-                io::println_error("Index out of range for first derivative");
+                meta::lite::io::println_error("Index out of range for first derivative");
                 return -1.0;
             }
             if (function_based)
             {
                 if (i < 0)
                 {
-                    io::println_error("Index cannot be negative for function-based derivative");
+                    meta::lite::io::println_error("Index cannot be negative for function-based derivative");
                     return -1.0;
                 }
                 // Use the function to compute the first derivative
@@ -880,24 +881,24 @@ namespace msl
         {
             if (h <= 0)
             {
-                io::println_error("The interval is zero or negative");
+                meta::lite::io::println_error("The interval is zero or negative");
                 return -1.0;
             }
             if (Fx.empty())
             {
-                io::println_error("Values must be set before computing the second derivative");
+                meta::lite::io::println_error("Values must be set before computing the second derivative");
                 return -1.0;
             }
             if (i - 2 < 0)
             {
-                io::println_error("Index out of range for second derivative");
+                meta::lite::io::println_error("Index out of range for second derivative");
                 return -1.0;
             }
             if (function_based)
             {
                 if (i < 0)
                 {
-                    io::println_error("Index cannot be negative for function-based derivative");
+                    meta::lite::io::println_error("Index cannot be negative for function-based derivative");
                     return -1.0;
                 }
                 // Use the function to compute the second derivative
@@ -919,24 +920,24 @@ namespace msl
         {
             if (h <= 0)
             {
-                io::println_error("The interval is zero or negative");
+                meta::lite::io::println_error("The interval is zero or negative");
                 return -1.0;
             }
             if (Fx.empty())
             {
-                io::println_error("Values must be set before computing the third derivative");
+                meta::lite::io::println_error("Values must be set before computing the third derivative");
                 return -1.0;
             }
             if (i - 3 < 0)
             {
-                io::println_error("Index out of range for third derivative");
+                meta::lite::io::println_error("Index out of range for third derivative");
                 return -1.0;
             }
             if (function_based)
             {
                 if (i < 0)
                 {
-                    io::println_error("Index cannot be negative for function-based derivative");
+                    meta::lite::io::println_error("Index cannot be negative for function-based derivative");
                     return -1.0;
                 }
                 // Use the function to compute the third derivative
@@ -968,7 +969,7 @@ namespace msl
         {
             if (H <= 0)
             {
-                io::println_error("Interval must be positive");
+                meta::lite::io::println_error("Interval must be positive");
                 return;
             }
             Fx = F;
@@ -987,12 +988,12 @@ namespace msl
         {
             if (!function_based)
             {
-                io::println_error("Function-based mode is not enabled");
+                meta::lite::io::println_error("Function-based mode is not enabled");
                 return;
             }
             if (H <= 0)
             {
-                io::println_error("Interval must be positive");
+                meta::lite::io::println_error("Interval must be positive");
                 return;
             }
             Fx = F;
@@ -1011,24 +1012,24 @@ namespace msl
         {
             if (h <= 0)
             {
-                io::println_error("The interval is zero or negative");
+                meta::lite::io::println_error("The interval is zero or negative");
                 return -1.0;
             }
             if (Fx.empty())
             {
-                io::println_error("Values must be set before computing the first derivative");
+                meta::lite::io::println_error("Values must be set before computing the first derivative");
                 return -1.0;
             }
             if (i - 1 < 0 || i + 1 >= Fx.size())
             {
-                io::println_error("Index out of range for first derivative");
+                meta::lite::io::println_error("Index out of range for first derivative");
                 return -1.0;
             }
             if (function_based)
             {
                 if (i < 0)
                 {
-                    io::println_error("Index cannot be negative for function-based derivative");
+                    meta::lite::io::println_error("Index cannot be negative for function-based derivative");
                     return -1.0;
                 }
                 // Use the function to compute the first derivative
@@ -1050,24 +1051,24 @@ namespace msl
         {
             if (h <= 0)
             {
-                io::println_error("The interval is zero or negative");
+                meta::lite::io::println_error("The interval is zero or negative");
                 return -1.0;
             }
             if (Fx.empty())
             {
-                io::println_error("Values must be set before computing the second derivative");
+                meta::lite::io::println_error("Values must be set before computing the second derivative");
                 return -1.0;
             }
             if (i - 1 < 0 || i + 1 >= Fx.size())
             {
-                io::println_error("Index out of range for second derivative");
+                meta::lite::io::println_error("Index out of range for second derivative");
                 return -1.0;
             }
             if (function_based)
             {
                 if (i < 0)
                 {
-                    io::println_error("Index cannot be negative for function-based derivative");
+                    meta::lite::io::println_error("Index cannot be negative for function-based derivative");
                     return -1.0;
                 }
                 // Use the function to compute the second derivative
@@ -1089,24 +1090,24 @@ namespace msl
         {
             if (h <= 0)
             {
-                io::println_error("The interval is zero or negative");
+                meta::lite::io::println_error("The interval is zero or negative");
                 return -1.0;
             }
             if (Fx.empty())
             {
-                io::println_error("Values must be set before computing the third derivative");
+                meta::lite::io::println_error("Values must be set before computing the third derivative");
                 return -1.0;
             }
             if (i - 2 < 0 || i + 2 >= Fx.size())
             {
-                io::println_error("Index out of range for third derivative");
+                meta::lite::io::println_error("Index out of range for third derivative");
                 return -1.0;
             }
             if (function_based)
             {
                 if (i < 0)
                 {
-                    io::println_error("Index cannot be negative for function-based derivative");
+                    meta::lite::io::println_error("Index cannot be negative for function-based derivative");
                     return -1.0;
                 }
                 // Use the function to compute the third derivative
@@ -1171,7 +1172,7 @@ namespace msl
     {
         if (Fx.empty())
         {
-            io::println_error("the vector passed to the function is empty");
+            meta::lite::io::println_error("the vector passed to the function is empty");
             return -1.0;
         }
         double h = (b - a) / n;
@@ -1197,7 +1198,7 @@ namespace msl
     {
         if (n <= 0)
         {
-            io::println_error("the number of sub-intervals must be positive");
+            meta::lite::io::println_error("the number of sub-intervals must be positive");
             return -1.0;
         }
         std::vector<double> Fx(n + 1);
@@ -1223,12 +1224,12 @@ namespace msl
     {
         if (Fx.empty())
         {
-            io::println_error("the vector past to the function is empty");
+            meta::lite::io::println_error("the vector past to the function is empty");
             return -1.0;
         }
         if (Fx.size() != 3)
         {
-            io::println_error("the size of the vector is incompatible");
+            meta::lite::io::println_error("the size of the vector is incompatible");
             return -1.0;
         }
         double h = b - a;
@@ -1268,12 +1269,12 @@ namespace msl
     {
         if (Fx.empty())
         {
-            io::println_error("the vector past to the function is empty");
+            meta::lite::io::println_error("the vector past to the function is empty");
             return -1.0;
         }
         if (Fx.size() != 4)
         {
-            io::println_error("the size of the vector is incompatible");
+            meta::lite::io::println_error("the size of the vector is incompatible");
             return -1.0;
         }
         double h = b - a;
@@ -1313,7 +1314,7 @@ namespace msl
     {
         if (Ro.empty())
         {
-            io::println_error("the vector passed to the function is empty");
+            meta::lite::io::println_error("the vector passed to the function is empty");
             return -1.0;
         }
         std::vector<std::vector<double>> R;
@@ -1366,7 +1367,7 @@ namespace msl
         // Input validation
         if (n <= 0 || xn <= x0)
         {
-            io::println_error("Error: Invalid input parameters");
+            meta::lite::io::println_error("Error: Invalid input parameters");
             return {};
         }
         // Calculate step size
