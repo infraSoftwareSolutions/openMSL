@@ -1,6 +1,6 @@
 #pragma once
-#ifndef OPENMSL___MSL___DLD_HPP
-#define OPENMSL___MSL___DLD_HPP
+#ifndef OPENMSL___MSL___dLd_HPP
+#define OPENMSL___MSL___dLd_HPP
 #include <iostream>
 #include <vector>
 #include <cmath>
@@ -8,9 +8,10 @@
 #include <algorithm>
 #include <string>
 #include <stdexcept>
+#include "cfrost/structure.h"
 
 /**
- * @file dld.hpp
+ * @file logic.hpp
  * @brief This header file defines classes for handling data sizes and numeral system conversions.
  * This header file defines classes for handling data sizes and conversions between different numeral systems (decimal, hexadecimal, octal, binary). The `data` class provides methods for converting between various data size units (bits, nibbles, bytes, words, kilobytes, megabytes, gigabytes, terabytes). The `decimal`, `hexadecimal`, `octal`, and `binary` classes provide functionality for representing and converting between these numeral systems. Each class includes constructors, assignment operators, and methods for performing conversions and displaying information about the data or numeral system. The code also includes error handling for invalid inputs.
  * @author Ali Lafi
@@ -26,205 +27,205 @@ namespace msl
     class data
     {
     private:
-        float dataSize;
-        std::string dataType;
+        double dataSize;
+        str dataType;
 
     public:
-        data() noexcept : dataSize(0), dataType("Bits") {}
-        data(float D) noexcept : dataSize(D) {}
-        data(const std::string &DT) noexcept : dataType(DT) {}
+        data() noexcept : dataSize(0), dataType("bits") {}
+        data(double d) noexcept : dataSize(d) {}
+        data(const str &dt) noexcept : dataType(dt) {}
         data(const data &other) noexcept : dataSize(other.dataSize), dataType(other.dataType) {}
-        data(float D, const std::string &DT) noexcept : dataSize(D), dataType(DT) {}
+        data(double d, const str &dt) noexcept : dataSize(d), dataType(dt) {}
         
-        void set_values(float D, const std::string &DT) noexcept
+        void set_values(double d, const str &dt) noexcept
         {
-            dataSize = D;
-            dataType = DT;
+            dataSize = d;
+            dataType = dt;
         }
         
         void data_dictionary(char ch = '?') noexcept
         {
-            std::cout << "1-Bit = 0 OR 1" << std::endl;
-            std::cout << "1-Nibble = 4-Bits" << std::endl;
-            std::cout << "1-Byte = 8-Bits = 2-Nibble" << std::endl;
-            std::cout << "1-word = 2-Byte = 4-Nibble = 16-Bits" << std::endl;
-            std::cout << "1-killo = 2^10" << std::endl;
-            std::cout << "1-Mega = 2^20" << std::endl;
-            std::cout << "1-Giga = 2^30" << std::endl;
-            std::cout << "1-Tira = 2^40" << std::endl;
+            std::cout << "1-Bit = 0 OR 1" << newl;
+            std::cout << "1-Nibble = 4-Bits" << newl;
+            std::cout << "1-Byte = 8-Bits = 2-Nibble" << newl;
+            std::cout << "1-word = 2-Byte = 4-Nibble = 16-Bits" << newl;
+            std::cout << "1-killo = 2^10" << newl;
+            std::cout << "1-Mega = 2^20" << newl;
+            std::cout << "1-Giga = 2^30" << newl;
+            std::cout << "1-Tira = 2^40" << newl;
         }
         
-        float To_Bits(float amountOfDat = 1, const char ConDat[20] = "Nibble")
+        double to_bits(double amountOfdat = 1, const str& condat = "nibble")
         {
-            if (ConDat == "Nibble")
-                return (amountOfDat * 4);
-            else if (ConDat == "Byte")
-                return (amountOfDat * 8);
-            else if (ConDat == "Word")
-                return (amountOfDat * 16);
-            else if (ConDat == "Killo")
-                return (amountOfDat * pow(2, 10));
-            else if (ConDat == "Mega")
-                return (amountOfDat * pow(2, 20));
-            else if (ConDat == "Giga")
-                return (amountOfDat * pow(2, 30));
-            else if (ConDat == "Tira")
-                return (amountOfDat * pow(2, 40));
-            else
-                throw std::invalid_argument("wrong data choosing");
-        }
-        
-        float To_Nibbles(float amountOfDat = 1, const char ConDat[20] = "Byte")
-        {
-            if (ConDat == "Bits")
-                return (amountOfDat / 4);
-            else if (ConDat == "Byte")
-                return (amountOfDat * 2);
-            else if (ConDat == "Word")
-                return (amountOfDat * 4);
-            else if (ConDat == "Killo")
-                return (amountOfDat * pow(2, 8));
-            else if (ConDat == "Mega")
-                return (amountOfDat * pow(2, 18));
-            else if (ConDat == "Giga")
-                return (amountOfDat * pow(2, 28));
-            else if (ConDat == "Tira")
-                return (amountOfDat * pow(2, 38));
-            else
-                throw std::invalid_argument("wrong data choosing");
-        }
-
-        float To_Bytes(float amountOfDat = 1, const char ConDat[20] = "Word")
-        {
-            if (ConDat == "Bits")
-                return (amountOfDat / 8);
-            else if (ConDat == "Nibble")
-                return (amountOfDat / 2);
-            else if (ConDat == "Word")
-                return (amountOfDat * 2);
-            else if (ConDat == "Killo")
-                return (amountOfDat * pow(2, 7));
-            else if (ConDat == "Mega")
-                return (amountOfDat * pow(2, 17));
-            else if (ConDat == "Giga")
-                return (amountOfDat * pow(2, 27));
-            else if (ConDat == "Tira")
-                return (amountOfDat * pow(2, 37));
+            if (condat == "nibble")
+                return (amountOfdat * 4);
+            else if (condat == "byte")
+                return (amountOfdat * 8);
+            else if (condat == "word")
+                return (amountOfdat * 16);
+            else if (condat == "killo")
+                return (amountOfdat * pow(2, 10));
+            else if (condat == "mega")
+                return (amountOfdat * pow(2, 20));
+            else if (condat == "giga")
+                return (amountOfdat * pow(2, 30));
+            else if (condat == "Tira")
+                return (amountOfdat * pow(2, 40));
             else
                 throw std::invalid_argument("wrong data choosing");
         }
         
-        float To_word(float amountOfDat = 1, const char ConDat[20] = "Killo")
+        double to_nibbles(double amountOfdat = 1, const str& condat = "byte")
         {
-            if (ConDat == "Bits")
-                return (amountOfDat / 16);
-            else if (ConDat == "Nibble")
-                return (amountOfDat / 4);
-            else if (ConDat == "Byte")
-                return (amountOfDat / 2);
-            else if (ConDat == "Killo")
-                return (amountOfDat * pow(2, 6));
-            else if (ConDat == "Mega")
-                return (amountOfDat * pow(2, 16));
-            else if (ConDat == "Giga")
-                return (amountOfDat * pow(2, 26));
-            else if (ConDat == "Tira")
-                return (amountOfDat * pow(2, 36));
+            if (condat == "bits")
+                return (amountOfdat / 4);
+            else if (condat == "byte")
+                return (amountOfdat * 2);
+            else if (condat == "word")
+                return (amountOfdat * 4);
+            else if (condat == "killo")
+                return (amountOfdat * pow(2, 8));
+            else if (condat == "mega")
+                return (amountOfdat * pow(2, 18));
+            else if (condat == "giga")
+                return (amountOfdat * pow(2, 28));
+            else if (condat == "Tira")
+                return (amountOfdat * pow(2, 38));
             else
                 throw std::invalid_argument("wrong data choosing");
         }
 
-        float To_Killo(float amountOfDat = 1, const char ConDat[20] = "Mega")
+        double to_bytes(double amountOfdat = 1, const str& condat = "word")
         {
-            if (ConDat == "Bits")
-                return (amountOfDat / pow(2, 10));
-            else if (ConDat == "Nibble")
-                return (amountOfDat / pow(2, 8));
-            else if (ConDat == "Byte")
-                return (amountOfDat / pow(2, 7));
-            else if (ConDat == "Word")
-                return (amountOfDat / pow(2, 6));
-            else if (ConDat == "Mega")
-                return (amountOfDat * pow(2, 10));
-            else if (ConDat == "Giga")
-                return (amountOfDat * pow(2, 20));
-            else if (ConDat == "Tira")
-                return (amountOfDat * pow(2, 30));
+            if (condat == "bits")
+                return (amountOfdat / 8);
+            else if (condat == "nibble")
+                return (amountOfdat / 2);
+            else if (condat == "word")
+                return (amountOfdat * 2);
+            else if (condat == "killo")
+                return (amountOfdat * pow(2, 7));
+            else if (condat == "mega")
+                return (amountOfdat * pow(2, 17));
+            else if (condat == "giga")
+                return (amountOfdat * pow(2, 27));
+            else if (condat == "Tira")
+                return (amountOfdat * pow(2, 37));
+            else
+                throw std::invalid_argument("wrong data choosing");
+        }
+        
+        double to_word(double amountOfdat = 1, const str& condat = "killo")
+        {
+            if (condat == "bits")
+                return (amountOfdat / 16);
+            else if (condat == "nibble")
+                return (amountOfdat / 4);
+            else if (condat == "byte")
+                return (amountOfdat / 2);
+            else if (condat == "killo")
+                return (amountOfdat * pow(2, 6));
+            else if (condat == "mega")
+                return (amountOfdat * pow(2, 16));
+            else if (condat == "giga")
+                return (amountOfdat * pow(2, 26));
+            else if (condat == "Tira")
+                return (amountOfdat * pow(2, 36));
             else
                 throw std::invalid_argument("wrong data choosing");
         }
 
-        float To_Mega(float amountOfDat = 1, const char ConDat[20] = "Giga")
+        double to_killo(double amountOfdat = 1, const str& condat = "mega")
         {
-            if (ConDat == "Bits")
-                return (amountOfDat / pow(2, 20));
-            else if (ConDat == "Nibble")
-                return (amountOfDat / pow(2, 18));
-            else if (ConDat == "Byte")
-                return (amountOfDat / pow(2, 17));
-            else if (ConDat == "Word")
-                return (amountOfDat / pow(2, 16));
-            else if (ConDat == "Killo")
-                return (amountOfDat / pow(2, 10));
-            else if (ConDat == "Giga")
-                return (amountOfDat * pow(2, 10));
-            else if (ConDat == "Tira")
-                return (amountOfDat * pow(2, 20));
+            if (condat == "bits")
+                return (amountOfdat / pow(2, 10));
+            else if (condat == "nibble")
+                return (amountOfdat / pow(2, 8));
+            else if (condat == "byte")
+                return (amountOfdat / pow(2, 7));
+            else if (condat == "word")
+                return (amountOfdat / pow(2, 6));
+            else if (condat == "mega")
+                return (amountOfdat * pow(2, 10));
+            else if (condat == "giga")
+                return (amountOfdat * pow(2, 20));
+            else if (condat == "Tira")
+                return (amountOfdat * pow(2, 30));
             else
                 throw std::invalid_argument("wrong data choosing");
         }
 
-        float To_Giga(float amountOfDat = 1, const char ConDat[20] = "Tira")
+        double to_mega(float amountOfdat = 1, const str& condat = "giga")
         {
-            if (ConDat == "Bits")
-                return (amountOfDat / pow(2, 30));
-            else if (ConDat == "Nibble")
-                return (amountOfDat / pow(2, 28));
-            else if (ConDat == "Byte")
-                return (amountOfDat / pow(2, 27));
-            else if (ConDat == "Word")
-                return (amountOfDat / pow(2, 26));
-            else if (ConDat == "Killo")
-                return (amountOfDat / pow(2, 20));
-            else if (ConDat == "Mega")
-                return (amountOfDat / pow(2, 10));
-            else if (ConDat == "Tira")
-                return (amountOfDat * pow(2, 10));
+            if (condat == "bits")
+                return (amountOfdat / pow(2, 20));
+            else if (condat == "nibble")
+                return (amountOfdat / pow(2, 18));
+            else if (condat == "byte")
+                return (amountOfdat / pow(2, 17));
+            else if (condat == "word")
+                return (amountOfdat / pow(2, 16));
+            else if (condat == "killo")
+                return (amountOfdat / pow(2, 10));
+            else if (condat == "giga")
+                return (amountOfdat * pow(2, 10));
+            else if (condat == "Tira")
+                return (amountOfdat * pow(2, 20));
             else
                 throw std::invalid_argument("wrong data choosing");
         }
 
-        float To_Tira(float amountOfDat = 1, const char ConDat[20] = "Giga")
+        double to_giga(double amountOfdat = 1, const str& condat = "Tira")
         {
-            if (ConDat == "Bits")
-                return (amountOfDat / pow(2, 40));
-            else if (ConDat == "Nibble")
-                return (amountOfDat / pow(2, 38));
-            else if (ConDat == "Byte")
-                return (amountOfDat / pow(2, 37));
-            else if (ConDat == "Word")
-                return (amountOfDat / pow(2, 36));
-            else if (ConDat == "Killo")
-                return (amountOfDat / pow(2, 30));
-            else if (ConDat == "Mega")
-                return (amountOfDat / pow(2, 20));
-            else if (ConDat == "Giga")
-                return (amountOfDat / pow(2, 10));
+            if (condat == "bits")
+                return (amountOfdat / pow(2, 30));
+            else if (condat == "nibble")
+                return (amountOfdat / pow(2, 28));
+            else if (condat == "byte")
+                return (amountOfdat / pow(2, 27));
+            else if (condat == "word")
+                return (amountOfdat / pow(2, 26));
+            else if (condat == "killo")
+                return (amountOfdat / pow(2, 20));
+            else if (condat == "mega")
+                return (amountOfdat / pow(2, 10));
+            else if (condat == "Tira")
+                return (amountOfdat * pow(2, 10));
             else
                 throw std::invalid_argument("wrong data choosing");
         }
 
-        void clear() noexcept
+        double to_tira(double amountOfdat = 1, const str& condat = "giga")
+        {
+            if (condat == "bits")
+                return (amountOfdat / pow(2, 40));
+            else if (condat == "nibble")
+                return (amountOfdat / pow(2, 38));
+            else if (condat == "byte")
+                return (amountOfdat / pow(2, 37));
+            else if (condat == "word")
+                return (amountOfdat / pow(2, 36));
+            else if (condat == "killo")
+                return (amountOfdat / pow(2, 30));
+            else if (condat == "mega")
+                return (amountOfdat / pow(2, 20));
+            else if (condat == "giga")
+                return (amountOfdat / pow(2, 10));
+            else
+                throw std::invalid_argument("wrong data choosing");
+        }
+
+        procedure(clear) noexcept
         {
             dataSize = 0;
-            dataType = "Bits";
+            dataType = "bits";
         }
         
-        void display() const
+        procedure(display) const
         {
             std::cout << "data Size: "
                       << dataSize << " "
-                      << dataType << std::endl;
+                      << dataType << newl;
         }
         
         void operator=(const data &other) noexcept
@@ -233,25 +234,25 @@ namespace msl
             dataType = other.dataType;
         }
         
-        void operator=(float D) noexcept { dataSize = D; }
+        void operator=(double d) noexcept { dataSize = d; }
         
-        void operator=(const std::string &DT) noexcept { dataType = DT; }
+        void operator=(const str &dt) noexcept { dataType = dt; }
         
-        bool operator==(float D) noexcept { return dataSize == D; }
+        bool operator==(double d) noexcept { return dataSize == d; }
         
-        bool operator==(const std::string &DT) noexcept { return dataType == DT; }
+        bool operator==(const str &dt) noexcept { return dataType == dt; }
         
-        bool operator!=(float D) noexcept { return dataSize != D; }
+        bool operator!=(double d) noexcept { return dataSize != d; }
         
-        bool operator!=(const std::string &DT) { return dataType != DT; }
+        bool operator!=(const str &dt) { return dataType != dt; }
         
-        void operator+=(float D) noexcept { dataSize += D; }
+        void operator+=(double d) noexcept { dataSize += d; }
         
-        void operator-=(float D) noexcept { dataSize -= D; }
+        void operator-=(double d) noexcept { dataSize -= d; }
         
-        void operator*=(float D) noexcept { dataSize *= D; }
+        void operator*=(double d) noexcept { dataSize *= d; }
         
-        void operator/=(float D) noexcept { dataSize /= D; }
+        void operator/=(double d) noexcept { dataSize /= d; }
         
         ~data() = default;
     };
@@ -270,7 +271,7 @@ namespace msl
         
         decimal(const hexadecimal &hex)
         {
-            std::string snum = hex.get();
+            str snum = hex.get();
             float cov = 0;
             float base = 1;
             bool isFraction = false;
@@ -297,7 +298,7 @@ namespace msl
                 else if (snum[i] >= 'a' && snum[i] <= 'f')
                     value = snum[i] - 'a' + 10;
                 else
-                    throw std::invalid_argument("Not valid character: " + std::string(1, snum[i]));
+                    throw std::invalid_argument("Not valid character: " + str(1, snum[i]));
                 if (isFraction)
                 {
                     cov += value * fractionBase;
@@ -316,10 +317,10 @@ namespace msl
         
         decimal(const octal &oct)
         {
-            std::string octStr = oct.get(); // Assuming octal class has a get() method
+            str octStr = oct.get(); // Assuming octal class has a get() method
             size_t dotPos = octStr.find('.');
-            std::string intPartStr = (dotPos == std::string::npos) ? octStr : octStr.substr(0, dotPos);
-            std::string fracPartStr = (dotPos == std::string::npos) ? "" : octStr.substr(dotPos + 1);
+            str intPartStr = (dotPos == str::npos) ? octStr : octStr.substr(0, dotPos);
+            str fracPartStr = (dotPos == str::npos) ? "" : octStr.substr(dotPos + 1);
             // Convert integer part
             float cov = 0.0;
             int base = 1;
@@ -328,11 +329,11 @@ namespace msl
                 char ch = intPartStr[i];
                 if (ch < '0' || ch > '7')
                 {
-                    std::cout << "Invalid digit in integer part: " << ch << std::endl;
+                    std::cout << "Invalid digit in integer part: " << ch << newl;
                     throw std::invalid_argument("Invalid octal digit in integer part");
                 }
-                int lastDigit = ch - '0';
-                cov += lastDigit * base;
+                int lastdigit = ch - '0';
+                cov += lastdigit * base;
                 base *= 8;
             }
             // Convert fractional part
@@ -343,7 +344,7 @@ namespace msl
                 char ch = fracPartStr[i];
                 if (ch < '0' || ch > '7')
                 {
-                    std::cout << "Invalid digit in fractional part: " << ch << std::endl;
+                    std::cout << "Invalid digit in fractional part: " << ch << newl;
                     throw std::invalid_argument("Invalid octal digit in fractional part");
                 }
                 int digit = ch - '0';
@@ -356,10 +357,10 @@ namespace msl
         decimal(const binary &bin)
         {
             // Assume binary class has a method get() that returns the binary string
-            std::string binStr = bin.get(); // You may need to implement get() in binary
+            str binStr = bin.get(); // You may need to implement get() in binary
             size_t dotPos = binStr.find('.');
-            std::string intPartStr = (dotPos == std::string::npos) ? binStr : binStr.substr(0, dotPos);
-            std::string fracPartStr = (dotPos == std::string::npos) ? "" : binStr.substr(dotPos + 1);
+            str intPartStr = (dotPos == str::npos) ? binStr : binStr.substr(0, dotPos);
+            str fracPartStr = (dotPos == str::npos) ? "" : binStr.substr(dotPos + 1);
             // Convert integer part
             float integerPart = 0;
             int base = 1;
@@ -368,11 +369,11 @@ namespace msl
                 char ch = intPartStr[i];
                 if (ch != '0' && ch != '1')
                 {
-                    std::cout << "Invalid binary digit: " << ch << std::endl;
+                    std::cout << "Invalid binary digit: " << ch << newl;
                     throw std::invalid_argument("Invalid binary input");
                 }
-                int lastDigit = ch - '0';
-                integerPart += lastDigit * base;
+                int lastdigit = ch - '0';
+                integerPart += lastdigit * base;
                 base *= 2;
             }
             // Convert fractional part
@@ -383,7 +384,7 @@ namespace msl
                 char ch = fracPartStr[i];
                 if (ch != '0' && ch != '1')
                 {
-                    std::cout << "Invalid fractional digit: " << ch << std::endl;
+                    std::cout << "Invalid fractional digit: " << ch << newl;
                     throw std::invalid_argument("Invalid binary input");
                 }
                 int digit = ch - '0';
@@ -400,12 +401,12 @@ namespace msl
         void base(char ch)
         {
             if (ch == '?' || ch == '!')
-                std::cout << "The base is 10" << std::endl;
+                std::cout << "The base is 10" << newl;
         }
         
         void operator=(const hexadecimal &hex)
         {
-            std::string snum = hex.get();
+            str snum = hex.get();
             float cov = 0;
             float base = 1;
             bool isFraction = false;
@@ -432,7 +433,7 @@ namespace msl
                 else if (snum[i] >= 'a' && snum[i] <= 'f')
                     value = snum[i] - 'a' + 10;
                 else
-                    throw std::invalid_argument("Not valid character: " + std::string(1, snum[i]));
+                    throw std::invalid_argument("Not valid character: " + str(1, snum[i]));
                 if (isFraction)
                 {
                     cov += value * fractionBase;
@@ -451,10 +452,10 @@ namespace msl
         
         void operator=(const octal &oct)
         {
-            std::string octStr = oct.get(); // Assuming octal class has a get() method
+            str octStr = oct.get(); // Assuming octal class has a get() method
             size_t dotPos = octStr.find('.');
-            std::string intPartStr = (dotPos == std::string::npos) ? octStr : octStr.substr(0, dotPos);
-            std::string fracPartStr = (dotPos == std::string::npos) ? "" : octStr.substr(dotPos + 1);
+            str intPartStr = (dotPos == str::npos) ? octStr : octStr.substr(0, dotPos);
+            str fracPartStr = (dotPos == str::npos) ? "" : octStr.substr(dotPos + 1);
             // Convert integer part
             float cov = 0.0;
             int base = 1;
@@ -463,11 +464,11 @@ namespace msl
                 char ch = intPartStr[i];
                 if (ch < '0' || ch > '7')
                 {
-                    std::cout << "Invalid digit in integer part: " << ch << std::endl;
+                    std::cout << "Invalid digit in integer part: " << ch << newl;
                     throw std::invalid_argument("Invalid octal digit in integer part");
                 }
-                int lastDigit = ch - '0';
-                cov += lastDigit * base;
+                int lastdigit = ch - '0';
+                cov += lastdigit * base;
                 base *= 8;
             }
             // Convert fractional part
@@ -478,7 +479,7 @@ namespace msl
                 char ch = fracPartStr[i];
                 if (ch < '0' || ch > '7')
                 {
-                    std::cout << "Invalid digit in fractional part: " << ch << std::endl;
+                    std::cout << "Invalid digit in fractional part: " << ch << newl;
                     throw std::invalid_argument("Invalid octal digit in fractional part");
                 }
                 int digit = ch - '0';
@@ -491,10 +492,10 @@ namespace msl
         void operator=(const binary &bin)
         {
             // Assume binary class has a method get() that returns the binary string
-            std::string binStr = bin.get(); // You may need to implement get() in binary
+            str binStr = bin.get(); // You may need to implement get() in binary
             size_t dotPos = binStr.find('.');
-            std::string intPartStr = (dotPos == std::string::npos) ? binStr : binStr.substr(0, dotPos);
-            std::string fracPartStr = (dotPos == std::string::npos) ? "" : binStr.substr(dotPos + 1);
+            str intPartStr = (dotPos == str::npos) ? binStr : binStr.substr(0, dotPos);
+            str fracPartStr = (dotPos == str::npos) ? "" : binStr.substr(dotPos + 1);
             // Convert integer part
             float integerPart = 0;
             int base = 1;
@@ -503,11 +504,11 @@ namespace msl
                 char ch = intPartStr[i];
                 if (ch != '0' && ch != '1')
                 {
-                    std::cout << "Invalid binary digit: " << ch << std::endl;
+                    std::cout << "Invalid binary digit: " << ch << newl;
                     throw std::invalid_argument("Invalid binary input");
                 }
-                int lastDigit = ch - '0';
-                integerPart += lastDigit * base;
+                int lastdigit = ch - '0';
+                integerPart += lastdigit * base;
                 base *= 2;
             }
             // Convert fractional part
@@ -518,7 +519,7 @@ namespace msl
                 char ch = fracPartStr[i];
                 if (ch != '0' && ch != '1')
                 {
-                    std::cout << "Invalid fractional digit: " << ch << std::endl;
+                    std::cout << "Invalid fractional digit: " << ch << newl;
                     throw std::invalid_argument("Invalid binary input");
                 }
                 int digit = ch - '0';
@@ -639,7 +640,7 @@ namespace msl
         void operator/=(long double num)
         {
             if (num == 0)
-                throw std::invalid_argument("Division by zero");
+                throw std::invalid_argument("division by zero");
             decNum /= num;
         }
         
@@ -721,8 +722,8 @@ namespace msl
     class hexadecimal
     {
     private:
-        std::string hexNum;
-        const std::map<char, int> hexDigits = {
+        str hexNum;
+        const hash_map<char, int> hexdigits = {
             {'0', 0},
             {'1', 1},
             {'2', 2},
@@ -736,19 +737,19 @@ namespace msl
             {'A', 10},
             {'B', 11},
             {'C', 12},
-            {'D', 13},
+            {'d', 13},
             {'E', 14},
             {'F', 15}};
 
     public:
         hexadecimal() : hexNum("") {}
         
-        hexadecimal(const std::string &hex)
+        hexadecimal(const str &hex)
         {
             hexNum = hex;
             for (char ch : hexNum)
             {
-                if (find(hexDigits.begin(), hexDigits.end(), ch) == hexDigits.end())
+                if (find(hexdigits.begin(), hexdigits.end(), ch) == hexdigits.end())
                     throw std::invalid_argument("Invalid hexadecimal input");
             }
         }
@@ -758,7 +759,7 @@ namespace msl
             hexNum = hex.get();
             for (char ch : hexNum)
             {
-                if (find(hexDigits.begin(), hexDigits.end(), ch) == hexDigits.end())
+                if (find(hexdigits.begin(), hexdigits.end(), ch) == hexdigits.end())
                     throw std::invalid_argument("Invalid hexadecimal input");
             }
         }
@@ -770,7 +771,7 @@ namespace msl
                 throw std::invalid_argument("Negative decimal value not supported for hexadecimal conversion");
             if (decValue == 0)
                 hexNum = "0";
-            std::string result;
+            str result;
             int intValue = static_cast<int>(decValue);
             while (intValue > 0)
             {
@@ -790,32 +791,31 @@ namespace msl
             hexNum = std::to_string(num);
             for (char ch : hexNum)
             {
-                if (find(hexDigits.begin(), hexDigits.end(), ch) == hexDigits.end())
+                if (find(hexdigits.begin(), hexdigits.end(), ch) == hexdigits.end())
                     throw std::invalid_argument("Invalid hexadecimal input");
             }
         }
         
-        void set(const std::string &hex)
+        void set(const str &hex)
         {
             hexNum = hex;
             for (char ch : hexNum)
             {
-                if (find(hexDigits.begin(), hexDigits.end(), ch) == hexDigits.end())
+                if (find(hexdigits.begin(), hexdigits.end(), ch) == hexdigits.end())
                     throw std::invalid_argument("Invalid hexadecimal input");
             }
         }
         
-        std::string get() const noexcept { return hexNum; }
+        str get() const noexcept { return hexNum; }
         
-        void clear() noexcept
-        {
-            hexNum.clear();
-        }
+        procedure(clear) noexcept { hexNum.clear(); }
         
+        procedure(base) noexcept { std::cout << "The base is 16" << newl; }
+
         void base(char ch)
         {
             if (ch == '?' || ch == '!')
-                std::cout << "The base is 16" << std::endl;
+                std::cout << "The base is 16" << newl;
         }
         
         bool empty() const noexcept { return hexNum.empty(); }
@@ -847,15 +847,15 @@ namespace msl
             // Convert decimal to octal
             float octalValue = 0;
             float octBase = 1;
-            int intDecimal = static_cast<int>(decimalValue);
-            while (intDecimal > 0)
+            int intdecimal = static_cast<int>(decimalValue);
+            while (intdecimal > 0)
             {
-                int lastDigit = intDecimal % 8;
-                octalValue += lastDigit * octBase;
+                int lastdigit = intdecimal % 8;
+                octalValue += lastdigit * octBase;
                 octBase *= 10;
-                intDecimal /= 8;
+                intdecimal /= 8;
             }
-            std::cout << octalValue << std::endl;
+            std::cout << octalValue << newl;
         }
         
         float operator=(binary &bin) const
@@ -885,13 +885,13 @@ namespace msl
             // Convert decimal to binary
             float binaryValue = 0;
             float binBase = 1;
-            int intDecimal = static_cast<int>(decimalValue);
-            while (intDecimal > 0)
+            int intdecimal = static_cast<int>(decimalValue);
+            while (intdecimal > 0)
             {
-                int lastDigit = intDecimal % 2;
-                binaryValue += lastDigit * binBase;
+                int lastdigit = intdecimal % 2;
+                binaryValue += lastdigit * binBase;
                 binBase *= 10;
-                intDecimal /= 2;
+                intdecimal /= 2;
             }
             return binaryValue;
         }
@@ -906,7 +906,7 @@ namespace msl
                 hexNum = "0";
                 return *this;
             }
-            std::string result;
+            str result;
             int intValue = static_cast<int>(decValue);
             while (intValue > 0)
             {
@@ -976,7 +976,7 @@ namespace msl
         {
             if (hexNum.empty())
                 throw std::invalid_argument("No hexadecimal value provided");
-            // Decrement the hexadecimal value
+            // decrement the hexadecimal value
             int carry = 1;
             for (int i = hexNum.length() - 1; i >= 0 && carry; --i)
             {
@@ -1021,9 +1021,9 @@ namespace msl
                 throw std::invalid_argument("No hexadecimal value provided");
             hexadecimal result;
             decimal dec1 = *this, dec2 = hex;
-            decimal sumDec = dec1;
-            sumDec += dec2.get();
-            result = sumDec;
+            decimal sumdec = dec1;
+            sumdec += dec2.get();
+            result = sumdec;
             return result;
         }
         
@@ -1033,9 +1033,9 @@ namespace msl
                 throw std::invalid_argument("No hexadecimal value provided");
             hexadecimal result;
             decimal dec1 = *this, dec2 = hex;
-            decimal diffDec = dec1;
-            diffDec -= dec2.get();
-            result = diffDec;
+            decimal diffdec = dec1;
+            diffdec -= dec2.get();
+            result = diffdec;
             return result;
         }
         
@@ -1045,9 +1045,9 @@ namespace msl
                 throw std::invalid_argument("No hexadecimal value provided");
             hexadecimal result;
             decimal dec1 = *this, dec2 = hex;
-            decimal prodDec = dec1;
-            prodDec *= dec2.get();
-            result = prodDec;
+            decimal proddec = dec1;
+            proddec *= dec2.get();
+            result = proddec;
             return result;
         }
         
@@ -1058,10 +1058,10 @@ namespace msl
             hexadecimal result;
             decimal dec1 = *this, dec2 = hex;
             if (dec2.get() == 0)
-                throw std::invalid_argument("Division by zero");
-            decimal quotDec = dec1;
-            quotDec /= dec2.get();
-            result = quotDec;
+                throw std::invalid_argument("division by zero");
+            decimal quotdec = dec1;
+            quotdec /= dec2.get();
+            result = quotdec;
             return result;
         }
         
@@ -1103,7 +1103,7 @@ namespace msl
     class octal
     {
     private:
-        std::string octNum;
+        str octNum;
 
     public:
         octal() : octNum("") {}
@@ -1115,47 +1115,49 @@ namespace msl
             {
                 if (ch < '0' || ch > '7')
                 {
-                    std::cout << "Invalid octal character: " << ch << std::endl;
+                    std::cout << "Invalid octal character: " << ch << newl;
                     throw std::invalid_argument("Invalid octal input");
                 }
             }
         }
         
-        octal(const std::string &oct)
+        octal(const str &oct)
         {
             octNum = oct;
             for (char ch : octNum)
             {
                 if (ch < '0' || ch > '7')
                 {
-                    std::cout << "Invalid octal character: " << ch << std::endl;
+                    std::cout << "Invalid octal character: " << ch << newl;
                     throw std::invalid_argument("Invalid octal input");
                 }
             }
         }
         
-        void set(const std::string &oct)
+        void set(const str &oct)
         {
             octNum = oct;
             for (char ch : octNum)
             {
                 if (ch < '0' || ch > '7')
                 {
-                    std::cout << "Invalid octal character: " << ch << std::endl;
+                    std::cout << "Invalid octal character: " << ch << newl;
                     throw std::invalid_argument("Invalid octal input");
                 }
             }
         }
         
-        std::string get() const noexcept
+        str get() const noexcept
         {
             return octNum;
         }
+
+        procedure(base) noexcept { std::cout << "The base is 8" << newl; }
         
-        void base(char ch)
+        void base(char ch) noexcept
         {
             if (ch == '?' || ch == '!')
-                std::cout << "The base is 8" << std::endl;
+                std::cout << "The base is 8" << newl;
         }
         
         bool empty() const
@@ -1163,10 +1165,7 @@ namespace msl
             return octNum.empty();
         }
         
-        void clear() noexcept
-        {
-            octNum.clear();
-        }
+        procedure(clear) noexcept { octNum.clear(); }
         
         void operator=(binary &bin) const
         {
@@ -1184,20 +1183,20 @@ namespace msl
                 base *= 8;
             }
             // Convert decimal to binary string
-            std::string binaryValue;
-            int tempDecimal = decimalValue;
-            if (tempDecimal == 0)
+            str binaryValue;
+            int tempdecimal = decimalValue;
+            if (tempdecimal == 0)
                 binaryValue = "0";
             else
             {
-                while (tempDecimal > 0)
+                while (tempdecimal > 0)
                 {
-                    binaryValue = (char)('0' + (tempDecimal % 2)) + binaryValue;
-                    tempDecimal /= 2;
+                    binaryValue = (char)('0' + (tempdecimal % 2)) + binaryValue;
+                    tempdecimal /= 2;
                 }
             }
             // You may want to set this value to a member or print it, depending on your design
-            std::cout << binaryValue << std::endl;
+            std::cout << binaryValue << newl;
         }
         
         void operator=(decimal &dec) const
@@ -1234,20 +1233,20 @@ namespace msl
                 base *= 8;
             }
             // Convert decimal to hexadecimal string
-            std::string hexValue;
-            int tempDecimal = decimalValue;
-            if (tempDecimal == 0)
+            str hexValue;
+            int tempdecimal = decimalValue;
+            if (tempdecimal == 0)
                 hexValue = "0";
             else
             {
-                while (tempDecimal > 0)
+                while (tempdecimal > 0)
                 {
-                    int remainder = tempDecimal % 16;
+                    int remainder = tempdecimal % 16;
                     if (remainder < 10)
                         hexValue += static_cast<char>('0' + remainder);
                     else
                         hexValue += static_cast<char>('A' + (remainder - 10));
-                    tempDecimal /= 16;
+                    tempdecimal /= 16;
                 }
                 std::reverse(hexValue.begin(), hexValue.end());
             }
@@ -1297,7 +1296,7 @@ namespace msl
         {
             if (octNum.empty())
                 throw std::invalid_argument("No octal value provided");
-            // Decrement the octal value
+            // decrement the octal value
             int carry = 1;
             for (int i = octNum.length() - 1; i >= 0 && carry; --i)
             {
@@ -1333,9 +1332,9 @@ namespace msl
             decimal dec1, dec2;
             dec1 = *this;
             dec2 = oct;
-            decimal sumDec = dec1;
-            sumDec += dec2.get();
-            result = sumDec;
+            decimal sumdec = dec1;
+            sumdec += dec2.get();
+            result = sumdec;
             return result;
         }
         
@@ -1347,9 +1346,9 @@ namespace msl
             decimal dec1, dec2;
             dec1 = *this;
             dec2 = oct;
-            decimal diffDec = dec1;
-            diffDec -= dec2.get();
-            result = diffDec;
+            decimal diffdec = dec1;
+            diffdec -= dec2.get();
+            result = diffdec;
             return result;
         }
         
@@ -1361,9 +1360,9 @@ namespace msl
             decimal dec1, dec2;
             dec1 = *this;
             dec2 = oct;
-            decimal prodDec = dec1;
-            prodDec *= dec2.get();
-            result = prodDec;
+            decimal proddec = dec1;
+            proddec *= dec2.get();
+            result = proddec;
             return result;
         }
         
@@ -1376,10 +1375,10 @@ namespace msl
             dec1 = *this;
             dec2 = oct;
             if (dec2.get() == 0)
-                throw std::invalid_argument("Division by zero");
-            decimal quotDec = dec1;
-            quotDec /= dec2.get();
-            result = quotDec;
+                throw std::invalid_argument("division by zero");
+            decimal quotdec = dec1;
+            quotdec /= dec2.get();
+            result = quotdec;
             return result;
         }
         
@@ -1421,19 +1420,19 @@ namespace msl
     class binary
     {
     private:
-        std::string bin;
-        std::string binNum;
+        str bin;
+        str binNum;
 
     public:
 
         binary() : bin(""), binNum("") {}
 
-        binary(const std::string &bincode)
+        binary(const str &bincode)
         {
             bin = bincode;
             if (!binary_test(bin))
             {
-                std::cout << "Invalid binary input" << std::endl;
+                std::cout << "Invalid binary input" << newl;
                 throw std::invalid_argument("Invalid binary input");
             }
         }
@@ -1443,27 +1442,27 @@ namespace msl
             binNum = std::to_string(bincode);
             if (!binary_test(binNum))
             {
-                std::cout << "Invalid binary input" << std::endl;
+                std::cout << "Invalid binary input" << newl;
                 throw std::invalid_argument("Invalid binary input");
             }
         }
 
-        void set(const std::string &bincode)
+        void set(const str &bincode)
         {
             bin = bincode;
             if (!binary_test(bin))
             {
-                std::cout << "Invalid binary input" << std::endl;
+                std::cout << "Invalid binary input" << newl;
                 throw std::invalid_argument("Invalid binary input");
             }
         }
 
-        std::string get() const noexcept
+        str get() const noexcept
         {
             return bin.empty() ? binNum : bin;
         }
 
-        bool binary_test(const std::string &bincode)
+        bool binary_test(const str &bincode)
         {
             for (char ch : bincode)
             {
@@ -1478,22 +1477,24 @@ namespace msl
             return bin.empty() && binNum.empty();
         }
 
-        void clear() noexcept
+        procedure(clear) noexcept
         {
             bin.clear();
             binNum.clear();
         }
 
-        void base(char ch)
+        procedure(base) noexcept { std::cout << "The base is 2" << newl; }
+
+        void base(char ch) noexcept
         {
             if (ch == '?' || ch == '!')
-                std::cout << "The base is 2" << std::endl;
+                std::cout << "The base is 2" << newl;
         }
 
         // true ~~> positive || false ~~> negative
-        std::string onesComplement(std::string bincode, bool numsing = true)
+        str onesComplement(str bincode, bool numsing = true)
         {
-            std::string resultCode;
+            str resultCode;
             for (char bit : bincode)
             {
                 if (bit == '0')
@@ -1508,18 +1509,18 @@ namespace msl
             return resultCode;
         }
 
-        std::string twosComplement(std::string bincode)
+        str twosComplement(str bincode)
         {
             if (bincode.empty())
             {
-                std::cout << "Error: Empty input!" << std::endl;
+                std::cout << "Error: Empty input!" << newl;
                 throw std::invalid_argument("Empty input");
             }
             for (char bit : bincode)
             {
                 if (bit != '0' && bit != '1')
                 {
-                    std::cout << "Error: Invalid character in input: " << bit << std::endl;
+                    std::cout << "Error: Invalid character in input: " << bit << newl;
                     throw std::invalid_argument("Invalid character in input");
                 }
             }
@@ -1548,12 +1549,12 @@ namespace msl
         {
             if (bin.empty() && binNum.empty())
                 throw std::invalid_argument("No binary value provided");
-            std::string targetBin = bin.empty() ? binNum : bin;
+            str targetBin = bin.empty() ? binNum : bin;
             // Convert binary string to decimal
             float decimalValue = 0.0f;
             size_t dotPos = targetBin.find('.');
-            std::string intPartStr = (dotPos == std::string::npos) ? targetBin : targetBin.substr(0, dotPos);
-            std::string fracPartStr = (dotPos == std::string::npos) ? "" : targetBin.substr(dotPos + 1);
+            str intPartStr = (dotPos == str::npos) ? targetBin : targetBin.substr(0, dotPos);
+            str fracPartStr = (dotPos == str::npos) ? "" : targetBin.substr(dotPos + 1);
 
             // Integer part
             int base = 1;
@@ -1562,8 +1563,8 @@ namespace msl
                 char ch = intPartStr[i];
                 if (ch != '0' && ch != '1')
                     throw std::invalid_argument("Invalid binary digit");
-                int lastDigit = ch - '0';
-                decimalValue += lastDigit * base;
+                int lastdigit = ch - '0';
+                decimalValue += lastdigit * base;
                 base *= 2;
             }
 
@@ -1586,9 +1587,9 @@ namespace msl
         {
             if (bin.empty() && binNum.empty())
                 throw std::invalid_argument("No binary value provided");
-            std::string targetBin = bin.empty() ? binNum : bin;
+            str targetBin = bin.empty() ? binNum : bin;
             // Helper: Convert binary string to decimal
-            auto binaryToDecimal = [](const std::string &binStr) -> int
+            auto binaryTodecimal = [](const str &binStr) -> int
             {
                 int result = 0;
                 for (char ch : binStr)
@@ -1600,8 +1601,8 @@ namespace msl
                 }
                 return result;
             };
-            int decimalValue = binaryToDecimal(targetBin);
-            std::string octalValue;
+            int decimalValue = binaryTodecimal(targetBin);
+            str octalValue;
             if (decimalValue == 0)
                 octalValue = "0";
             else
@@ -1619,9 +1620,9 @@ namespace msl
         {
             if (bin.empty() && binNum.empty())
                 throw std::invalid_argument("No binary value provided");
-            std::string targetBin = bin.empty() ? binNum : bin;
+            str targetBin = bin.empty() ? binNum : bin;
             // Helper: Convert binary string to decimal
-            auto binaryToDecimal = [](const std::string &binStr) -> int
+            auto binaryTodecimal = [](const str &binStr) -> int
             {
                 int result = 0;
                 for (char ch : binStr)
@@ -1633,8 +1634,8 @@ namespace msl
                 }
                 return result;
             };
-            int decimalValue = binaryToDecimal(targetBin);
-            std::string hexValue;
+            int decimalValue = binaryTodecimal(targetBin);
+            str hexValue;
             if (decimalValue == 0)
             {
                 hexValue = "0";
@@ -1666,7 +1667,7 @@ namespace msl
         {
             if (bin.empty() && binNum.empty())
                 throw std::invalid_argument("No binary value provided");
-            std::string &targetBin = bin.empty() ? binNum : bin;
+            str &targetBin = bin.empty() ? binNum : bin;
             int carry = 1;
             for (int i = targetBin.length() - 1; i >= 0 && carry; --i)
             {
@@ -1699,7 +1700,7 @@ namespace msl
         {
             if (bin.empty() && binNum.empty())
                 throw std::invalid_argument("No binary value provided");
-            std::string &targetBin = bin.empty() ? binNum : bin;
+            str &targetBin = bin.empty() ? binNum : bin;
             int carry = 1;
             for (int i = targetBin.length() - 1; i >= 0 && carry; --i)
             {
@@ -1736,9 +1737,9 @@ namespace msl
             decimal dec1, dec2;
             dec1 = *this;
             dec2 = binObj;
-            decimal sumDec = dec1;
-            sumDec += dec2.get();
-            result = sumDec;
+            decimal sumdec = dec1;
+            sumdec += dec2.get();
+            result = sumdec;
             return result;
         }
 
@@ -1750,9 +1751,9 @@ namespace msl
             decimal dec1, dec2;
             dec1 = *this;
             dec2 = binObj;
-            decimal diffDec = dec1;
-            diffDec -= dec2.get();
-            result = diffDec;
+            decimal diffdec = dec1;
+            diffdec -= dec2.get();
+            result = diffdec;
             return result;
         }
 
@@ -1764,9 +1765,9 @@ namespace msl
             decimal dec1, dec2;
             dec1 = *this;
             dec2 = binObj;
-            decimal prodDec = dec1;
-            prodDec *= dec2.get();
-            result = prodDec;
+            decimal proddec = dec1;
+            proddec *= dec2.get();
+            result = proddec;
             return result;
         }
 
@@ -1779,10 +1780,10 @@ namespace msl
             dec1 = *this;
             dec2 = binObj;
             if (dec2.get() == 0)
-                throw std::invalid_argument("Division by zero");
-            decimal quotDec = dec1;
-            quotDec /= dec2.get();
-            result = quotDec;
+                throw std::invalid_argument("division by zero");
+            decimal quotdec = dec1;
+            quotdec /= dec2.get();
+            result = quotdec;
             return result;
         }
 
@@ -1821,10 +1822,10 @@ namespace msl
         ~binary() = default;
     };
 
-    std::string to_hex(int num) noexcept
+    str to_hex(int num) noexcept
     {
         float fnum = num;
-        std::string Newstr, result;
+        str Newstr, result;
         for (int i = 0; i < num; i++)
         {
             fnum /= 16;
@@ -1837,7 +1838,7 @@ namespace msl
             else if (test == 12)
                 Newstr += 'C';
             else if (test == 13)
-                Newstr += 'D';
+                Newstr += 'd';
             else if (test == 14)
                 Newstr += 'E';
             else if (test == 15)
@@ -1879,7 +1880,7 @@ namespace msl
         return count;
     }
 
-    bool binary_test(std::string bincode) noexcept
+    bool binary_test(str bincode) noexcept
     {
         for (int i = 0; i < bincode.length(); i++)
         {
@@ -1889,18 +1890,18 @@ namespace msl
         return true;
     }
 
-    std::string reverse(std::string result) noexcept
+    str reverse(str result) noexcept
     {
-        std::string NewRes;
+        str NewRes;
         int len = result.length();
         for (int i = len - 1; i >= 0; i--)
             NewRes += result[i];
         return NewRes;
     }
 
-    std::string ToBCD(int num) noexcept
+    str toBCd(int num) noexcept
     {
-        std::string result;
+        str result;
         while (num)
         {
             if (num % 10 == 0)
@@ -1928,10 +1929,10 @@ namespace msl
         return result;
     }
 
-    std::string Excess_3(int num) noexcept
+    str excess_3(int num) noexcept
     {
         int NewNum;
-        std::string result;
+        str result;
         while (num)
         {
             NewNum = num % 10;
@@ -1960,9 +1961,9 @@ namespace msl
         return result;
     }
 
-    std::string code_2421(int num) noexcept
+    str code_2421(int num) noexcept
     {
-        std::string result;
+        str result;
         while (num)
         {
             if (num % 10 == 0)
@@ -1990,9 +1991,9 @@ namespace msl
         return result;
     }
 
-    std::string code_8421(int num) noexcept
+    str code_8421(int num) noexcept
     {
-        std::string result;
+        str result;
         while (num)
         {
             if (num % 10 == 0)
@@ -2020,10 +2021,10 @@ namespace msl
         return result;
     }
 
-    std::string Gray_code(std::string bincode) noexcept
+    str gray_code(str bincode) noexcept
     {
         size_t binlen = bincode.length();
-        std::string resultCode;
+        str resultCode;
         if (binlen == 0)
             return "no value send to the function";
         // First bit of Gray code is the same as first bit of binary
@@ -2039,18 +2040,18 @@ namespace msl
         return resultCode;
     }
 
-    std::string ASCII(char ch) noexcept
+    str ASCII(char ch) noexcept
     {
         int ChNum = ch;
         int result_code = to_binary(ChNum);
         return std::to_string(result_code);
     }
     
-    std::string Error_Detecting_code(std::string bincode, bool evenParity = true) noexcept
+    str error_detecting_code(str bincode, bool evenParity = true) noexcept
     {
         if (!binary_test(bincode))
             return "wrong value in the code.";
-        std::string result;
+        str result;
         short int count = 0;
         for (int i = 0; i < bincode.length(); i++)
             if (bincode[i] == '1')
@@ -2078,4 +2079,4 @@ namespace msl
         return result;
     }
 };
-#endif // OPENMSL___MSL___DLD_HPP
+#endif // OPENMSL___MSL___dLd_HPP

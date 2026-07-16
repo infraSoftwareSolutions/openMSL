@@ -1,0 +1,5 @@
+#pragma once
+#ifndef OPENMSL___MSL___STATISTICS_HPP
+#define OPENMSL___MSL___STATISTICS_HPP
+
+#endif // OPENMSL___MSL___STATISTICS_HPP
