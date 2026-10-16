@@ -10,9 +10,9 @@
             "intelliSenseMode": "windows-gcc-x64",
 
             "includePath": [
-                "C:/Users/User/OneDrive/Documents/GitHub/openCF/include",
-                "C:/Users/User/OneDrive/Documents/GitHub/openUDT/include",
-                "C:/Users/User/OneDrive/Documents/GitHub/metaCore/include",
+                "C:/Users/User/OneDrive/Documents/GitHub/ISS/openCF/include",
+                "C:/Users/User/OneDrive/Documents/GitHub/ISS/openUDT/include",
+                "C:/Users/User/OneDrive/Documents/GitHub/ISS/openETL/include",
                 "C:/msys64/ucrt64/include"
             ],
 
@@ -33,9 +33,9 @@
             "intelliSenseMode": "windows-gcc-x64",
 
             "includePath": [
-                "C:/Users/User/OneDrive/Documents/GitHub/openCF/include",
-                "C:/Users/User/OneDrive/Documents/GitHub/openUDT/include",
-                "C:/Users/User/OneDrive/Documents/GitHub/metaCore/include",
+                "C:/Users/User/OneDrive/Documents/GitHub/ISS/openCF/include",
+                "C:/Users/User/OneDrive/Documents/GitHub/ISS/openUDT/include",
+                "C:/Users/User/OneDrive/Documents/GitHub/ISS/openETL/include",
                 "C:/msys64/ucrt64/include",
                 "C:/msys64/ucrt64/include/c++/15.2.0"
             ],

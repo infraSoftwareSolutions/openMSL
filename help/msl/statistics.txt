@@ -1,0 +1,215 @@
+ Object: StatisticsContainer
+-------------------
+Description of the `StatisticsContainer` class that manages a collection 
+of statistical data points, including methods for adding and removing 
+items.
+It is intended to store key-value pairs where each value has an 
+weight representing its frequency or count. This struct supports 
+operations like insertion, retrieval based on keys (which could represent 
+different variables).
+Description: The `StatisticsContainer` class in C++ provides a collection 
+of statistical data points and their respective weights.
+Purpose: To efficiently manage the storage and querying of variable 
+occurrences or frequencies within datasets for analysis. It can store 
+multiple items with customizable keys (e.g., variables) along with 
+associated frequency counts, allowing efficient tracking and manipulation 
+of these statistics without direct memory management outside its member 
+functions
+Members/Functions: 
+- insert(const std::string& key, const T weight): Increments the count 
+a given key by one.
+- remove(): Removes an item from the container based on equality with 
+provided data (the function is not defined here but assumed to be 
+implemented internally).
+- size() -> int: Returns the number of items currently in the collection. 
+This method returns 0 when no elements are present.
+- find(const std::string& key): Checks if a specific item exists within 
+the container, returning true or false accordingly and does not modify 
+anything other than its return value
+Description: Searches for an existing entry with matching keys in the 
+collection. Returns `true` (or 1) when found; otherwise it returns false.
+- clear(): Empties all items from the StatisticsContainer object.
+Members/Functions: 
+- insert(const std::string& key, const T weight): Increments a value's 
+count within the container by one. If no matching item exists for `key`, 
+it will create a new entry with this frequency and initialize its count 
+1.
+
+Object: KeyValuePair
+---------------------
+Description of what ObjectKeyValuePair represents (hinted at in function 
+descriptions): A simple structure holding two strings representing 
+key-value pairs, where the string is stored as both a std::string object 
+for easy manipulation and access; T can be any data type.
+Purpose: To represent an individual statistic along with its associated 
+weight or frequency
+Members/Functions: 
+- get_key() -> const std::string& : Returns the key, which is a string 
+representing specific metric name. This function returns only and always 
+points to one of these objects.
+- setWeight(T value) -> void: Sets the weight for an existing item or 
+initializes it if not present
+Description: Assigns frequency count/weight when adding new items without 
+altering its key 
+- get_value() -> T : Retrieves and returns a reference to this Object's 
+associated data.
+Members/Functions: 
+ #pragma once
+#include <unordered_map>
+// OpenMSL MSL statistics library - A C++ template class for handling 
+statistical analysis of multiple variables in a dataset. This file 
+includes methods for the following functionalities... 
+
+struct KeyValuePair {
+    std::string key; //Key is always string type, holding variable name.
+    double value;
+public:
+    explicit KeyValuePair(const std::string& var_name, T weight = 1.0) : 
+m_key{std::move(var_name), m_weight {std::move(weight)} {} // Constructor 
+to initialize the pair.
+     
+}
+#include "StatisticsContainer.hpp"
+
+struct StatisticsContainer {
+    std::unordered_map<std::string, double> container;   // Holds all 
+key-value pairs and their respective frequencies/weights.
+public:  
+    void insert(const stddisction& varName,
+              const T weight);       // Insert or update the frequency of 
+a given variable (key) based on its occurrence in dataset. If item not 
+already present, it initializes with count=1
+Description: Increments the value's counter by one.
+void insert(const std::string& key,
+             const T weight);
+    bool find(const std::string& key)
+        const T get_value() {
+            return this->container[key];
+    }
+Description: Returns true if the container contains item with given name.
+bool operator== (const std::string& searchKey) const;
+Members/Functions:  
+- find(const std::string& key)
+        bool Search for an element using a string, returns True when found
+Description: Returns true if the container contains item with given name.
+bool operator!=(const T value);
+    void clear();             // Removes all items from this object. This 
+function does not return anything (void). 
+Members/Functions:  
+- size() -> int
+        const Size_t Returns the number of elements stored in container.
+Description: Get count for each unique key present within 
+StatisticsContainer;
+int operator==(const T value)
+    bool Find if an item is already existent inside it, using double 
+equality check. 
+bool remove() // Remove from this object - Removes single element
+Members/Functions:  
+- erase();        ///< Deletion by key.
+void clear()
+Description: Empty the entire container.
+Description: Destroys all items in the collection. Note that it does not 
+return any information as this operation doesn't expect to provide data 
+back
+Members/Functions:  
+- size() -> int //Return count of unique keys present within the object, 
+with a default value for unset elements.
+int operator==(const T& item)
+    bool erase(const std::string& key)        ///< Deletes an element by 
+its identifier and reduces container's size
+Description: Returns true if found; false otherwise. 
+bool remove() // Removes a single occurrence of given string.
+Members/Functions:  
+- get_size() -> int : Count the number of items inside this object, or 
+return -1 when no elements are present for container size
+        const Size_t Returns current element count in 
+
+Size_t operator==(const T& item) // Searches if an identifier is 
+within it.
+void erase(const std::string& key)
+Description: Removes a specific string from the map using its name, 
+without removing multiple occurrences
+bool remove()  ///< Deletion by value. Returns true upon success; false 
+otherwise 
+    Description: Erases an element if it exists.
+void clear()
+Members/Functions:                     // Method to delete all elements 
+the container.
+Description: Clears out items from this object
+bool find(const std::string& key)  ///< Check for a certain item within 
+map. Returns true when found; otherwise false.
+int size()    
+#include "StatisticsContainer.hpp"
+class StatisticsContainer {
+public:
+private:
+std::unordered_map<> container;
+//... rest of the class definition continues here ... 
+ #pragma once
+/*========================== STATISTICS CONTAINER CLASS 
+=============================== */
+Description: A simple, custom data structure for handling a collection of 
+key-value pairs representing statistical occurrences within datasets.
+This container supports basic operations such as insertion and deletion. 
+
+#include <unordered_map>
+class StatisticsContainer {
+public:  // Members & Functions Description: Holds all the necessary 
+components to represent a collection of variable names with their 
+respective frequencies/counts in an internal std::unordered_map.
+    struct KeyValuePair{
+        std::string key;         ///< Unique identifier for the 
+statistical value
+        double weight = 1.0; // A numeric representation typically 
+representing frequency or count (double)
+        
+    public:             ///< Default constructor to initialize a new 
+object.
+      explicit KeyValuePair(const string& var_name= "", T val = "") : 
+key{key}, value(val) {}
+       /// < Constructs an empty container and sets the default values 
+all keys. 
+    };
+        //... rest of class definition continues ...     
+Description: Increments frequency count by one.
+void insert(const std::string& varName, double weight)
+      void clear()                       ///< Empty this container to 
+remove all elements
+Members/Functions:  
+- size()
+    int operator== (const T item) // Check for an element's presence.
+Description: Compares two containers and checks if they are equal in 
+of content. Returns true when same; false otherwise.
+bool get_size() const
+Members/Functions:  
+- find(const std::string& key)
+      bool Search for a specific item by its identifier, returns true 
+finding it.
+#include "StatisticsContainer.hpp"
+using namespace openmsl;
+class StatisticsContainer {
+public:                           ///< Default constructor
+    int size() const;        ///< Get the number of elements in this 
+object (default weight is one)
+Description: Increments frequency count by 1.
+void insert(const std::string& varName, double value);
+Members/Functions: 
+- get_size()
+    bool find(const string &key) const;         ///< Search for an item 
+using its identifier and return true when found
+Description: Deletes the element identified by a key.
+bool erase(const stddessert& id);
+Description: Erases specific data point from container. Returns 'true' on 
+success, false otherwise (e.g., if not present). 
+int operator== (const T item)
+    Description: Checks equality with another object
+void clear();         ///< Empty this StatisticsContainer.
+bool find(const std::string& key) const;  ///< Searches for a specific 
+identifier in the map and return true if found, false otherwise. 
+int operator== (const T item)
+    Description: Returns container's size
+Description: Clears out all elements from this object.
+bool remove() // Remove an element by its key identification.
+void clear();         ///< Erases every single instance of the given 
+identifier in the map.  
+#endif

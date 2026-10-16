@@ -1,15 +1,3 @@
-#pragma once
-#ifndef OPENMSL___MSL___dLd_HPP
-#define OPENMSL___MSL___dLd_HPP
-#include <iostream>
-#include <vector>
-#include <cmath>
-#include <map>
-#include <algorithm>
-#include <string>
-#include <stdexcept>
-#include "cfrost/structure.h"
-
 /**
  * @file logic.hpp
  * @brief This header file defines classes for handling data sizes and numeral system conversions.
@@ -18,6 +6,18 @@
  * @date 2024-06-01
  */
 
+
+#include <iostream>
+#include <cmath>
+#include <algorithm>
+#include <string>
+#include <stdexcept>
+#include "cfrost/structure.h"
+#include "cfrost/types.h"
+
+#pragma once
+#ifndef OPENMSL___MSL___dLd_HPP
+#define OPENMSL___MSL___dLd_HPP
 
 namespace msl
 {
@@ -28,16 +28,16 @@ namespace msl
     {
     private:
         double dataSize;
-        str dataType;
+        ocf::str dataType;
 
     public:
         data() noexcept : dataSize(0), dataType("bits") {}
         data(double d) noexcept : dataSize(d) {}
-        data(const str &dt) noexcept : dataType(dt) {}
+        data(const ocf::str &dt) noexcept : dataType(dt) {}
         data(const data &other) noexcept : dataSize(other.dataSize), dataType(other.dataType) {}
-        data(double d, const str &dt) noexcept : dataSize(d), dataType(dt) {}
+        data(double d, const ocf::str &dt) noexcept : dataSize(d), dataType(dt) {}
         
-        void set_values(double d, const str &dt) noexcept
+        void set_values(double d, const ocf::str &dt) noexcept
         {
             dataSize = d;
             dataType = dt;
@@ -55,7 +55,7 @@ namespace msl
             std::cout << "1-Tira = 2^40" << newl;
         }
         
-        double to_bits(double amountOfdat = 1, const str& condat = "nibble")
+        double to_bits(double amountOfdat = 1, const ocf::str & condat = "nibble")
         {
             if (condat == "nibble")
                 return (amountOfdat * 4);
@@ -75,7 +75,7 @@ namespace msl
                 throw std::invalid_argument("wrong data choosing");
         }
         
-        double to_nibbles(double amountOfdat = 1, const str& condat = "byte")
+        double to_nibbles(double amountOfdat = 1, const ocf::str & condat = "byte")
         {
             if (condat == "bits")
                 return (amountOfdat / 4);
@@ -95,7 +95,7 @@ namespace msl
                 throw std::invalid_argument("wrong data choosing");
         }
 
-        double to_bytes(double amountOfdat = 1, const str& condat = "word")
+        double to_bytes(double amountOfdat = 1, const ocf::str & condat = "word")
         {
             if (condat == "bits")
                 return (amountOfdat / 8);
@@ -115,7 +115,7 @@ namespace msl
                 throw std::invalid_argument("wrong data choosing");
         }
         
-        double to_word(double amountOfdat = 1, const str& condat = "killo")
+        double to_word(double amountOfdat = 1, const ocf::str & condat = "killo")
         {
             if (condat == "bits")
                 return (amountOfdat / 16);
@@ -135,7 +135,7 @@ namespace msl
                 throw std::invalid_argument("wrong data choosing");
         }
 
-        double to_killo(double amountOfdat = 1, const str& condat = "mega")
+        double to_killo(double amountOfdat = 1, const ocf::str & condat = "mega")
         {
             if (condat == "bits")
                 return (amountOfdat / pow(2, 10));
@@ -155,7 +155,7 @@ namespace msl
                 throw std::invalid_argument("wrong data choosing");
         }
 
-        double to_mega(float amountOfdat = 1, const str& condat = "giga")
+        double to_mega(float amountOfdat = 1, const ocf::str & condat = "giga")
         {
             if (condat == "bits")
                 return (amountOfdat / pow(2, 20));
@@ -175,7 +175,7 @@ namespace msl
                 throw std::invalid_argument("wrong data choosing");
         }
 
-        double to_giga(double amountOfdat = 1, const str& condat = "Tira")
+        double to_giga(double amountOfdat = 1, const ocf::str & condat = "Tira")
         {
             if (condat == "bits")
                 return (amountOfdat / pow(2, 30));
@@ -195,7 +195,7 @@ namespace msl
                 throw std::invalid_argument("wrong data choosing");
         }
 
-        double to_tira(double amountOfdat = 1, const str& condat = "giga")
+        double to_tira(double amountOfdat = 1, const ocf::str & condat = "giga")
         {
             if (condat == "bits")
                 return (amountOfdat / pow(2, 40));
@@ -236,15 +236,15 @@ namespace msl
         
         void operator=(double d) noexcept { dataSize = d; }
         
-        void operator=(const str &dt) noexcept { dataType = dt; }
+        void operator=(const ocf::str &dt) noexcept { dataType = dt; }
         
         bool operator==(double d) noexcept { return dataSize == d; }
         
-        bool operator==(const str &dt) noexcept { return dataType == dt; }
+        bool operator==(const ocf::str &dt) noexcept { return dataType == dt; }
         
         bool operator!=(double d) noexcept { return dataSize != d; }
         
-        bool operator!=(const str &dt) { return dataType != dt; }
+        bool operator!=(const ocf::str &dt) { return dataType != dt; }
         
         void operator+=(double d) noexcept { dataSize += d; }
         
@@ -271,7 +271,7 @@ namespace msl
         
         decimal(const hexadecimal &hex)
         {
-            str snum = hex.get();
+            ocf::str snum = hex.get();
             float cov = 0;
             float base = 1;
             bool isFraction = false;
@@ -298,7 +298,7 @@ namespace msl
                 else if (snum[i] >= 'a' && snum[i] <= 'f')
                     value = snum[i] - 'a' + 10;
                 else
-                    throw std::invalid_argument("Not valid character: " + str(1, snum[i]));
+                    throw std::invalid_argument("Not valid character: " + ocf::str(1, snum[i]));
                 if (isFraction)
                 {
                     cov += value * fractionBase;
@@ -317,10 +317,10 @@ namespace msl
         
         decimal(const octal &oct)
         {
-            str octStr = oct.get(); // Assuming octal class has a get() method
+            ocf::str octStr = oct.get(); // Assuming octal class has a get() method
             size_t dotPos = octStr.find('.');
-            str intPartStr = (dotPos == str::npos) ? octStr : octStr.substr(0, dotPos);
-            str fracPartStr = (dotPos == str::npos) ? "" : octStr.substr(dotPos + 1);
+            ocf::str intPartStr = (dotPos == ocf::str::npos) ? octStr : octStr.substr(0, dotPos);
+            ocf::str fracPartStr = (dotPos == ocf::str::npos) ? "" : octStr.substr(dotPos + 1);
             // Convert integer part
             float cov = 0.0;
             int base = 1;
@@ -357,10 +357,10 @@ namespace msl
         decimal(const binary &bin)
         {
             // Assume binary class has a method get() that returns the binary string
-            str binStr = bin.get(); // You may need to implement get() in binary
+            ocf::str binStr = bin.get(); // You may need to implement get() in binary
             size_t dotPos = binStr.find('.');
-            str intPartStr = (dotPos == str::npos) ? binStr : binStr.substr(0, dotPos);
-            str fracPartStr = (dotPos == str::npos) ? "" : binStr.substr(dotPos + 1);
+            ocf::str intPartStr = (dotPos == ocf::str::npos) ? binStr : binStr.substr(0, dotPos);
+            ocf::str fracPartStr = (dotPos == ocf::str::npos) ? "" : binStr.substr(dotPos + 1);
             // Convert integer part
             float integerPart = 0;
             int base = 1;
@@ -406,7 +406,7 @@ namespace msl
         
         void operator=(const hexadecimal &hex)
         {
-            str snum = hex.get();
+            ocf::str snum = hex.get();
             float cov = 0;
             float base = 1;
             bool isFraction = false;
@@ -433,7 +433,7 @@ namespace msl
                 else if (snum[i] >= 'a' && snum[i] <= 'f')
                     value = snum[i] - 'a' + 10;
                 else
-                    throw std::invalid_argument("Not valid character: " + str(1, snum[i]));
+                    throw std::invalid_argument("Not valid character: " + ocf::str(1, snum[i]));
                 if (isFraction)
                 {
                     cov += value * fractionBase;
@@ -452,10 +452,10 @@ namespace msl
         
         void operator=(const octal &oct)
         {
-            str octStr = oct.get(); // Assuming octal class has a get() method
+            ocf::str octStr = oct.get(); // Assuming octal class has a get() method
             size_t dotPos = octStr.find('.');
-            str intPartStr = (dotPos == str::npos) ? octStr : octStr.substr(0, dotPos);
-            str fracPartStr = (dotPos == str::npos) ? "" : octStr.substr(dotPos + 1);
+            ocf::str intPartStr = (dotPos == ocf::str::npos) ? octStr : octStr.substr(0, dotPos);
+            ocf::str fracPartStr = (dotPos == ocf::str::npos) ? "" : octStr.substr(dotPos + 1);
             // Convert integer part
             float cov = 0.0;
             int base = 1;
@@ -492,10 +492,10 @@ namespace msl
         void operator=(const binary &bin)
         {
             // Assume binary class has a method get() that returns the binary string
-            str binStr = bin.get(); // You may need to implement get() in binary
+            ocf::str binStr = bin.get(); // You may need to implement get() in binary
             size_t dotPos = binStr.find('.');
-            str intPartStr = (dotPos == str::npos) ? binStr : binStr.substr(0, dotPos);
-            str fracPartStr = (dotPos == str::npos) ? "" : binStr.substr(dotPos + 1);
+            ocf::str intPartStr = (dotPos == ocf::str::npos) ? binStr : binStr.substr(0, dotPos);
+            ocf::str fracPartStr = (dotPos == ocf::str::npos) ? "" : binStr.substr(dotPos + 1);
             // Convert integer part
             float integerPart = 0;
             int base = 1;
@@ -722,8 +722,8 @@ namespace msl
     class hexadecimal
     {
     private:
-        str hexNum;
-        const hash_map<char, int> hexdigits = {
+        ocf::str hexNum;
+        const ocf::hash_map<char, int> hexdigits = {
             {'0', 0},
             {'1', 1},
             {'2', 2},
@@ -744,7 +744,7 @@ namespace msl
     public:
         hexadecimal() : hexNum("") {}
         
-        hexadecimal(const str &hex)
+        hexadecimal(const ocf::str &hex)
         {
             hexNum = hex;
             for (char ch : hexNum)
@@ -771,7 +771,7 @@ namespace msl
                 throw std::invalid_argument("Negative decimal value not supported for hexadecimal conversion");
             if (decValue == 0)
                 hexNum = "0";
-            str result;
+            ocf::str result;
             int intValue = static_cast<int>(decValue);
             while (intValue > 0)
             {
@@ -796,7 +796,7 @@ namespace msl
             }
         }
         
-        void set(const str &hex)
+        void set(const ocf::str &hex)
         {
             hexNum = hex;
             for (char ch : hexNum)
@@ -806,7 +806,7 @@ namespace msl
             }
         }
         
-        str get() const noexcept { return hexNum; }
+        ocf::str get() const noexcept { return hexNum; }
         
         procedure(clear) noexcept { hexNum.clear(); }
         
@@ -906,7 +906,7 @@ namespace msl
                 hexNum = "0";
                 return *this;
             }
-            str result;
+            ocf::str result;
             int intValue = static_cast<int>(decValue);
             while (intValue > 0)
             {
@@ -1103,7 +1103,7 @@ namespace msl
     class octal
     {
     private:
-        str octNum;
+        ocf::str octNum;
 
     public:
         octal() : octNum("") {}
@@ -1121,7 +1121,7 @@ namespace msl
             }
         }
         
-        octal(const str &oct)
+        octal(const ocf::str &oct)
         {
             octNum = oct;
             for (char ch : octNum)
@@ -1134,7 +1134,7 @@ namespace msl
             }
         }
         
-        void set(const str &oct)
+        void set(const ocf::str &oct)
         {
             octNum = oct;
             for (char ch : octNum)
@@ -1147,7 +1147,7 @@ namespace msl
             }
         }
         
-        str get() const noexcept
+        ocf::str get() const noexcept
         {
             return octNum;
         }
@@ -1183,7 +1183,7 @@ namespace msl
                 base *= 8;
             }
             // Convert decimal to binary string
-            str binaryValue;
+            ocf::str binaryValue;
             int tempdecimal = decimalValue;
             if (tempdecimal == 0)
                 binaryValue = "0";
@@ -1233,7 +1233,7 @@ namespace msl
                 base *= 8;
             }
             // Convert decimal to hexadecimal string
-            str hexValue;
+            ocf::str hexValue;
             int tempdecimal = decimalValue;
             if (tempdecimal == 0)
                 hexValue = "0";
@@ -1420,14 +1420,14 @@ namespace msl
     class binary
     {
     private:
-        str bin;
-        str binNum;
+        ocf::str bin;
+        ocf::str binNum;
 
     public:
 
         binary() : bin(""), binNum("") {}
 
-        binary(const str &bincode)
+        binary(const ocf::str &bincode)
         {
             bin = bincode;
             if (!binary_test(bin))
@@ -1447,7 +1447,7 @@ namespace msl
             }
         }
 
-        void set(const str &bincode)
+        void set(const ocf::str &bincode)
         {
             bin = bincode;
             if (!binary_test(bin))
@@ -1457,12 +1457,12 @@ namespace msl
             }
         }
 
-        str get() const noexcept
+        ocf::str get() const noexcept
         {
             return bin.empty() ? binNum : bin;
         }
 
-        bool binary_test(const str &bincode)
+        bool binary_test(const ocf::str &bincode)
         {
             for (char ch : bincode)
             {
@@ -1492,9 +1492,9 @@ namespace msl
         }
 
         // true ~~> positive || false ~~> negative
-        str onesComplement(str bincode, bool numsing = true)
+        ocf::str onesComplement(ocf::str bincode, bool numsing = true)
         {
-            str resultCode;
+            ocf::str resultCode;
             for (char bit : bincode)
             {
                 if (bit == '0')
@@ -1509,7 +1509,7 @@ namespace msl
             return resultCode;
         }
 
-        str twosComplement(str bincode)
+        ocf::str twosComplement(ocf::str bincode)
         {
             if (bincode.empty())
             {
@@ -1549,12 +1549,12 @@ namespace msl
         {
             if (bin.empty() && binNum.empty())
                 throw std::invalid_argument("No binary value provided");
-            str targetBin = bin.empty() ? binNum : bin;
+            ocf::str targetBin = bin.empty() ? binNum : bin;
             // Convert binary string to decimal
             float decimalValue = 0.0f;
             size_t dotPos = targetBin.find('.');
-            str intPartStr = (dotPos == str::npos) ? targetBin : targetBin.substr(0, dotPos);
-            str fracPartStr = (dotPos == str::npos) ? "" : targetBin.substr(dotPos + 1);
+            ocf::str intPartStr = (dotPos == ocf::str::npos) ? targetBin : targetBin.substr(0, dotPos);
+            ocf::str fracPartStr = (dotPos == ocf::str::npos) ? "" : targetBin.substr(dotPos + 1);
 
             // Integer part
             int base = 1;
@@ -1587,9 +1587,9 @@ namespace msl
         {
             if (bin.empty() && binNum.empty())
                 throw std::invalid_argument("No binary value provided");
-            str targetBin = bin.empty() ? binNum : bin;
+            ocf::str targetBin = bin.empty() ? binNum : bin;
             // Helper: Convert binary string to decimal
-            auto binaryTodecimal = [](const str &binStr) -> int
+            auto binaryTodecimal = [](const ocf::str &binStr) -> int
             {
                 int result = 0;
                 for (char ch : binStr)
@@ -1602,7 +1602,7 @@ namespace msl
                 return result;
             };
             int decimalValue = binaryTodecimal(targetBin);
-            str octalValue;
+            ocf::str octalValue;
             if (decimalValue == 0)
                 octalValue = "0";
             else
@@ -1620,9 +1620,9 @@ namespace msl
         {
             if (bin.empty() && binNum.empty())
                 throw std::invalid_argument("No binary value provided");
-            str targetBin = bin.empty() ? binNum : bin;
+            ocf::str targetBin = bin.empty() ? binNum : bin;
             // Helper: Convert binary string to decimal
-            auto binaryTodecimal = [](const str &binStr) -> int
+            auto binaryTodecimal = [](const ocf::str &binStr) -> int
             {
                 int result = 0;
                 for (char ch : binStr)
@@ -1635,7 +1635,7 @@ namespace msl
                 return result;
             };
             int decimalValue = binaryTodecimal(targetBin);
-            str hexValue;
+            ocf::str hexValue;
             if (decimalValue == 0)
             {
                 hexValue = "0";
@@ -1667,7 +1667,7 @@ namespace msl
         {
             if (bin.empty() && binNum.empty())
                 throw std::invalid_argument("No binary value provided");
-            str &targetBin = bin.empty() ? binNum : bin;
+            ocf::str &targetBin = bin.empty() ? binNum : bin;
             int carry = 1;
             for (int i = targetBin.length() - 1; i >= 0 && carry; --i)
             {
@@ -1700,7 +1700,7 @@ namespace msl
         {
             if (bin.empty() && binNum.empty())
                 throw std::invalid_argument("No binary value provided");
-            str &targetBin = bin.empty() ? binNum : bin;
+            ocf::str &targetBin = bin.empty() ? binNum : bin;
             int carry = 1;
             for (int i = targetBin.length() - 1; i >= 0 && carry; --i)
             {
@@ -1822,10 +1822,10 @@ namespace msl
         ~binary() = default;
     };
 
-    str to_hex(int num) noexcept
+    ocf::str to_hex(int num) noexcept
     {
         float fnum = num;
-        str Newstr, result;
+        ocf::str Newstr, result;
         for (int i = 0; i < num; i++)
         {
             fnum /= 16;
@@ -1880,7 +1880,7 @@ namespace msl
         return count;
     }
 
-    bool binary_test(str bincode) noexcept
+    bool binary_test(ocf::str bincode) noexcept
     {
         for (int i = 0; i < bincode.length(); i++)
         {
@@ -1890,18 +1890,18 @@ namespace msl
         return true;
     }
 
-    str reverse(str result) noexcept
+    ocf::str reverse(ocf::str result) noexcept
     {
-        str NewRes;
+        ocf::str NewRes;
         int len = result.length();
         for (int i = len - 1; i >= 0; i--)
             NewRes += result[i];
         return NewRes;
     }
 
-    str toBCd(int num) noexcept
+    ocf::str toBCd(int num) noexcept
     {
-        str result;
+        ocf::str result;
         while (num)
         {
             if (num % 10 == 0)
@@ -1929,10 +1929,10 @@ namespace msl
         return result;
     }
 
-    str excess_3(int num) noexcept
+    ocf::str excess_3(int num) noexcept
     {
         int NewNum;
-        str result;
+        ocf::str result;
         while (num)
         {
             NewNum = num % 10;
@@ -1961,9 +1961,9 @@ namespace msl
         return result;
     }
 
-    str code_2421(int num) noexcept
+    ocf::str code_2421(int num) noexcept
     {
-        str result;
+        ocf::str result;
         while (num)
         {
             if (num % 10 == 0)
@@ -1991,9 +1991,9 @@ namespace msl
         return result;
     }
 
-    str code_8421(int num) noexcept
+    ocf::str code_8421(int num) noexcept
     {
-        str result;
+        ocf::str result;
         while (num)
         {
             if (num % 10 == 0)
@@ -2021,10 +2021,10 @@ namespace msl
         return result;
     }
 
-    str gray_code(str bincode) noexcept
+    ocf::str gray_code(ocf::str bincode) noexcept
     {
         size_t binlen = bincode.length();
-        str resultCode;
+        ocf::str resultCode;
         if (binlen == 0)
             return "no value send to the function";
         // First bit of Gray code is the same as first bit of binary
@@ -2040,18 +2040,18 @@ namespace msl
         return resultCode;
     }
 
-    str ASCII(char ch) noexcept
+    ocf::str ASCII(char ch) noexcept
     {
         int ChNum = ch;
         int result_code = to_binary(ChNum);
         return std::to_string(result_code);
     }
     
-    str error_detecting_code(str bincode, bool evenParity = true) noexcept
+    ocf::str error_detecting_code(ocf::str bincode, bool evenParity = true) noexcept
     {
         if (!binary_test(bincode))
             return "wrong value in the code.";
-        str result;
+        ocf::str result;
         short int count = 0;
         for (int i = 0; i < bincode.length(); i++)
             if (bincode[i] == '1')

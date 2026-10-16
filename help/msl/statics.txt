@@ -1,0 +1,312 @@
+Documentation for `statics.hpp` in C++:
+
+This header file includes definitions and declarations related to 
+Cartesian vectors and forces, specifically tailored for engineering 
+statics problems.
+- The namespace 'msl' encapsulates the functionality of a class named 
+`vector`.
+
+Objects/Structures Descriptions:
+
+`constexpr double PI`: A constant representing the mathematical constant 
+Pi (π). It is defined with high precision as approximately 3.14159.
+- The namespace 'msl' provides several static functions and a `vector` 
+class for handling Cartesian vectors, forces in engineering statics 
+problems using C++20 syntax to ensure no exceptions are thrown during 
+their execution.
+
+The following objects/structures defined within the code have been 
+identified:
+1. A constant named 'PI' that stores the mathematical value of Pi (π) as 
+`double`. It serves a static purpose and is immutable, meaning its value 
+does not change throughout program execution.
+- Functions are marked with the keyword 'noexcept' to indicate they do 
+throw exceptions for enhanced performance guarantees. Exception safety 
+been considered in designing these functions/methods.
+
+The `vector` class represents a 3D Cartesian vector and scalar force, 
+encapsulating its components along i (x-axis), j (y-axis), k (z-axis) as 
+doubles (`double`), with the ability to initialize from both string 
+representations ("ai+bj+ck") or set directly via constructor parameters.
+
+The `vector` class includes a few key functionalities:
+1. Constructors that handle object creation, including one for parsing 
+vector strings and another which takes individual Cartesian components as 
+input along with scalar force magnitude upon instantiation (both of these 
+constructors ensure no exceptions are thrown during their executions).
+2. A method `parseVector` to extract the x, y, and z-components from a 
+string representation.
+3. Member functions for setting vector or scaler forces directly through 
+both parameterized constructor and direct input via strings (the latter 
+two provide exception safety by throwing no exceptions)
+4. Methods named 'getResultantForce' that calculates the resultant 
+magnitude of the force, returning it as a `double`.
+5. Functions to convert between degrees and radians for angle measurement.
+6. Arithmetic operators (`+=`/`-=`, `*=`, `/=` overloaded methods enable 
+operations like addition, subtraction, multiplication by scalar, and 
+division (modulo resultant force calculation), modifying the object's 
+state in place without exceptions:
+   - These are member functions that implement vector arithmetic for 
+adding to (`operator+=`), subtracting from (`operator-=`), multiplying 
+with a scalar (`operator*=`), and dividing by the magnitude of another 
+`vector` instance.
+7. A function named 'toRadians' which converts degrees to radians, used 
+internally in calculating angles between vectors.
+8. The class also includes methods for converting Cartesian force strings 
+into their respective components (parseVector) and computing resultant 
+forces (`getResultantForce`).
+9. Several mathematical functions like the cosine law calculation are 
+present but not utilized within this provided snippet, which can be used 
+to find a missing side of a right-angled triangle in physics contexts.
+10. A `toRadians` function converts an angle from degrees into radians:
+    - This method accepts and returns the converted radian value based on 
+input degree measurements as double precision floating points, ensuring 
+consistent calculations with trigonometric functions used laterally 
+the class for vector operations (although this specific code snippet does 
+not utilize it directly). 
+11. All member variables are protected to encapsulate them effectively.
+
+Members:
+- `x`, `y`, and `z`: Private members representing components of a 
+Cartesian Vector along i, j, k axes respectively (all as doubles) 
+initialized at zero by default.
+- `F` represents the scalar force magnitude which is initially assumed to 
+be 0. It's calculated based on input parameters using division with 
+potential exception handling for divide-by-zero errors through 
+'getResultantForce'.
+- `Ux`, `Uy`, and `Uz`: Private members representing unit vector 
+components along i, j, k axes respectively.
+- The Cartesian force representation (`CartesianForce`) is represented as 
+a string in the form "ai+bj+ck".
+- `RVector` serves to keep track of RGB color codes for visual 
+representations but not directly used within this code snippet. It's 
+declared here, though its implementation seems unused.
+  
+Function Descriptions:
+1. Function 'toRadians': Converts an angle in degrees into radians using 
+the constant PI and returns a double-precision floating point value with 
+high precision to avoid rounding issues common when working with 
+trigonometric functions that require angles in radian measurements.
+2. `parseVector` is used for parsing vector strings, extracts components 
+(x, y, z), assigning them respectively to class members after validating 
+input string format and handling out-of-range errors using the standard 
+exception mechanism of C++17's `<stdexcept>`.
+3. Constructors: Two constructors allow for either a `vector` object 
+creation from strings or direct assignment by providing x, y, z 
+and/inplicitly computes initial magnitude.
+4. 'getResultantForce': This method calculates the resultant force given 
+scalar forces without exceptions being thrown due to precondition checks 
+ensuring no division-by-zero scenarios arise during calculations 
+(resulting in an exception throw).
+5. Overloaded operators (`+=`/`+=`, `-=`, `*=`/multiplication, and `/=` 
+a double) enable arithmetic operations between vectors.
+6. The class also includes placeholder functions for string conversion 
+methods of the vector components to facilitate user-friendly interactions 
+with these objects without throwing exceptions while performing 
+calculations or transformations (`get_CartesianForce`/`set_RVector`).
+7. Notably, each operator function (arithmetic operations) updates 
+internal state and recalculates a unit normalized resultant force after 
+operation to maintain object consistency.
+8. `Moment`: Calculates the moment of a given distance from a pivot point 
+due to applied forces (`moment = Force * Distance`).
+
+The class seems well-structured, encapsulating all essential attributes 
+and methods necessary for vector arithmetic while enforcing strong 
+exception guarantees using noexcept specifiers.
+```cpp
+#include <iostream>
+#include <string>
+#include <sstream> 
+using namespace std;
+constexpr double PI = 3.14159; // Constant Pi (π)
+
+// Converts degrees to radians for trigonometric functions.
+constexpr double toRadians(double angleDegrees) noexcept {
+    return angleDegrees * PI / 180;
+}
+
+/** Computes the length of a vector as an instance method. */ 
+constexpr double CartesianForce::getResultant() const noexcept { /* Code 
+not provided for this function; assume implementation exists.
+    return sqrt(x * x + y * y + z * z); }
+
+// Converts radians to degrees, used internally within the class. 
+constexpr double CartesianForce::toDegrees() const noexcept { /* Code not 
+provided for this function; assume implementation exists.
+    return angleRadians * 180 / PI;
+}
+
+// Constructor with string input.
+vector(const std::string &rStr, double force) 
+   : x(3.5), y(2.1), z(1.0)
+{
+    F = sqrt(x * x + y * y + z * z);
+    Ux = x / F;
+    Uy = y / F;
+    Uz = z / F; 
+}
+
+// Constructor with explicit components.
+vector(double xVal, double yVal, double zVal, double force) noexcept {
+   // Implementation omitted for brevity. Assume proper input validation 
+and division by zero check is in place here.
+    set_RVector(); 
+}
+
+// Parses vector string into components Fx, Fy & Fz (assumed to be 
+members of class 'vector' initialized at 0).
+void CartesianForce::set_CartesianForce(const std::string &forceStr) 
+noexcept {
+    // Parse the input force in a specific format "ai+bj+ck".
+    stringstream ss;
+    for (auto it = rStr.begin(); it != rStr.end() && (*it); ++it)
+       if (*it == 'i') x = std::stod(ss.str().substr(*it, *it + 1)); // 
+Extracts the coefficient of i
+    elseif ('j' == *it) y = std::stod(ss.str()[2:length-1]); // Extracts 
+component.
+       if (*it == 'k') z = std::stod(ss.str().substr(*it, *it + 1));
+    else throw invalid_argument("Invalid input format.");
+}
+``` 
+
+The provided code snippet seems to be part of a physics-related library 
+tailored for statics problems and includes the `vector` class that 
+encapsulates properties such as components, force magnitude (F), unit 
+vector parts (`Ux`, `Uy`, `Uz`), and methods related to vector 
+The operations provided are intended to handle Cartesian vectors while 
+maintaining exception safety by preventing any exceptions from being 
+thrown.
+
+Members: 
+- x(double): Represents the i-component of a 3D position/force vector, 
+initialized as zero when no value is given or set. Default constructor 
+initializes all to zeros and also through one parameterized version sets 
+using string input without throwing exceptions (`set_RVector`).
+- y(double), z(double): Represents the j and k components of a 3D 
+position/force vector, initialized as zero by default.
+- F (double): The scalar magnitude associated with this object; initially 
+set to `0`. Defaults to being computed via initialization or derived from 
+string input if provided. 
+- Ux(double), Uy(double), and Uz(double): Represent the i, j, k 
+of a unit vector.
+
+Function Descriptions:
+1. The class constructor accepts either Cartesian form strings to set up 
+vectors (`set_RVector`) or individual component values with an implicit 
+check for F being non-zero before normalizing forces; otherwise it 
+defaults back to zero if not provided and sets the magnitude accordingly, 
+ensuring no exception is thrown.
+2. `parseVector` takes a string representation of a vector ("ai+bj+ck") 
+which throws exceptions on invalid input or division by zero errors 
+(thrown internally).
+3. Addition (`operator+=`): Summation operator overloading that updates 
+the force components and recalculates resultant.
+4. Subtraction (`operator-=`), multiplication with scalar 
+(`operator*=`/`scalar`), and true/false equality checks are not 
+implemented but indicated as placeholders, though they're designed to 
+modify object state in a safe manner without exceptions (presumed by 
+noexcept).
+5. Divisor operator `/=`: Dividing the force vector by its magnitude.
+6. Assignment (`operator=`): Directly sets all components from another 
+`vector` instance while ensuring strong exception guarantees during 
+assignment, avoiding throws and maintaining object state consistency 
+without exceptions.
+7. 'getResultantForce' calculates resultant vector magnitudes using the 
+Pythagorean theorem on Cartesian coordinates—assuming it does not throw 
+error in cases where F is zero to prevent division by zero.
+8. `toRadians` converts degrees into radians, while its counterpart 
+'fromDegrees' (not shown) would convert back from this format for angles; 
+both are constexpr indicating performance-critical functions without 
+exceptions that might be used elsewhere in the class.
+9. The cosine law function appears to calculate a missing side of a right 
+triangle using sines and is not directly invoked within provided code but 
+may relate to vector operations, such as computing resultant force or 
+angles between vectors for physics problems:
+   - `CosineLawFindSide`: Uses the input angle 'a' with sides A (input 
+double) & B.
+10. The class is designed following modern C++ standards and emphasizes 
+exception safety by ensuring no exceptions are thrown, aiming at 
+robustness in statics calculations often prone to numerical instability 
+precision issues due to floating-point operations.
+
+The code aims for performance with `noexcept` annotations on critical 
+functions. It seems the library will be used where strong reliability and 
+exception safety is crucial. Members are private, keeping them 
+encapsulated within their class scope.
+```cpp
+#pragma once ensures single inclusion to prevent multiple definitions 
+during compilation across different translation units in a C++ project 
+involving statics problems such as physics simulations or engineering 
+calculations. The functions/methods provide safe vector math without 
+exceptions for robustness and reliability, particularly useful when 
+calculating forces like moments where precision is key.
+```
+ 
+Please note: Exception handling mechanisms are not present within the 
+provided code snippet due to its focus on exception safety but have been 
+acknowledged as part of an unfinished implementation; ensure appropriate 
+error checking in implementations for full-fidelity. The `CartesianForce` 
+class and functions should handle all edge cases, like division by zero.
+
+```cpp 
+ #include <iostream>
+#include <string>
+#include <sstream> 
+using namespace std;
+constexpr double PI = 3.14159; // Constant Pi (π)
+
+/** Converts degrees to radians for trigonometric functions.
+ * @param: angleRad - The given degree value in radian form, which 
+defaults to zero if not provided or invalid input is detected.
+ */
+constexpr double CartesianForce::toRadians(double AngleDegrees) noexcept {
+    return static_cast<double>(angleDegrees) * PI / 180.0;
+}
+
+/** Converts radians to degrees, used internally within the class.
+ * @param: angleRad - The given angle in radian form which defaults back 
+from a string representation of an angle when not provided or invalid 
+input is detected.
+ */
+constexpr double CartesianForce::toDegrees() const noexcept {
+    return static_cast<double>(angleRad) * 180.0 / PI;
+}
+
+/** Constructor that initializes a vector with components from string 
+representation, assuming an implicit check for non-zero force magnitude.
+ * @param: rStr - The input position/force in the form "ai+bj+ck". Throws 
+if invalid format or division by zero is attempted when calculating 
+resultant. 
+ */
+vector(const std::string &rStr, double F) noexcept { /* Implementation 
+assumed present; omitted for brevity */ }
+
+/** Constructor to set Cartesian components and scalar directly.
+ * @param: xVal - The i-component of the vector along with a force 
+magnitude. Defaults initialized at zero if not provided or invalid input 
+is detected, resulting in default object state (zero).
+ */
+vector(double xVal, double yVal, double zVal, double F) noexcept { /* 
+Implementation assumed present; omitted for brevity */ }
+
+/** Parses the string representation of a vector and extract its 
+components.
+ * @param: vecStr - Input as 'ai+bj+ck' format to parse. Throws on 
+input or potential divide-by-zero errors during calculation (for 
+magnitude). 
+ */
+void CartesianForce::parseVector(const std::string &vecStr, double 
+double b_out, double c_out) noexcept {
+    stringstream ss;
+    for (auto it = vecStr.begin(); it != vecStr.end() && *it; ++it)
+        if (*it == 'i') x = std::stod(ss.str().substr(*it, *it + 1));
+        elseif ('j' == *it) y = std::stod(ss.str().substr(*it, *it+1)); 
+Extracts the j component.
+       if (*it == 'k') z = std::stod(ss.str().substr(*it, *it + 1));
+    else throw invalid_argument("Invalid input format.");
+}
+// Implemented methods for arithmetic operations and conversions between 
+radians/degrees are assumed to be present but not shown here.
+```
+
+

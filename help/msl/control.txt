@@ -1,0 +1,169 @@
+## LIBRARY OVERVIEW ##:
+This C++ library provides implementations for proportional, integral, and 
+derivative controllers (`p_controller`, `i_controller`, `d_controller`), 
+as well as a combined controller class that can connect these three types 
+in series or parallel configurations using the block form of PID control. 
+The core functionality utilizes numerical integration and differentiation 
+methods provided by an external library.
+
+## OBJECTS & DATA STRUCTURES ##:
+
+### p_controller ###:
+- **Object**: `p_controller` - Represents a proportional controller that 
+calculates the control output based on the difference between setpoint 
+process variable.
+  - Members:
+    - `kp (double)`: Proportional gain constant, determining how strongly 
+the system responds to errors.
+    - `setpoint (double)`: The desired value for the controlled variable.
+    - `input_function (ocf::func<double(double)>)`: User-defined input 
+function that provides the process variable over time. Default is 
+meaning no user input required.
+  - Public Functions:
+    - Constructors (`p_controller()`): Create a default controller with 
+zero gain and setpoint or copy from another instance.
+      Parameters: None (constructor initializes `kp` to 0.0, `setpoint` 
+0.0, and sets input function as nullptr).
+    - Destructor/Assignment Operator Overload (`~p_controller()`): Reset 
+the controller's parameters.
+      Parameters: None (function automatically clears internal state on 
+destruction or assignment)
+    - `reset(void)`: Convenience method to reset all controller 
+and clear output values map
+    - Parameter setters/getters (`set()`, get_kp(), etc.): Set controller 
+parameters, return constants like gain.
+      Parameters (example for setting proportional gain): `double Kp` 
+the proportional constant k.
+  
+- Member functions:
+  - `compute(double time)` computes output based on current error and 
+integrates over a given interval of times using numerical integration 
+methods. Returns double representing control action at specified time 
+point.
+    - Edge case handling or usage notes are not provided in the code 
+snippet, but it is recommended to ensure input functions provide expected 
+behavior for accurate controller performance
+  
+- Overloaded operators: Assignment (`operator=`) and comparison operator 
+(`operator==`), allowing copying of controller instances. Usage should be 
+with caution as deep copies might lead to unintended shared state changes.
+  - `<<` (i_controller) or `>>`(d_controller): Allows combining a 
+proportional control action into an integral or derivative, respectively
+  
+- Numerical library usage: Depends on the numerical integration and 
+differentiation implementations not detailed in this snippet. Users 
+refer to "numerical.hpp" for function signatures.
+
+### i_controller ###:
+- **Object**: `i_controller` - Represents an integral controller that 
+integrates past errors over time, accumulating the error and applying a 
+correction based on this sum.
+  - Members:
+    - `ki (double)`: Integral gain constant regulating the influence of 
+historical cumulative error.
+    - `setpoint (double)`: Desired value for controlled variable 
+integration.
+    - `input_function (ocf::func<double(double)>)`: User-defined input 
+function providing past values. Default is nullptr, meaning no user 
+history provided.
+  - Public Functions:
+    - Constructors (`i_controller()`): Create a default controller with 
+zero gain and setpoint or copy from another instance.
+      Parameters: None (constructor initializes `ki` to 0.0, `setpoint` 
+0.0, sets input function as nullptr).
+    - Destructor/Assignment Operator Overload (`~i_controller()`): Reset 
+controller attributes and map of output values.
+      Parameters: None (function clears internal state on destruction or 
+assignment)
+    - `reset(void)`: Convenience method to reset all control parameters 
+and clear the computed outputs cache
+  
+- Member functions:
+  - Compute error integral over a given time range with numerical 
+integration. Returns double for cumulative output.
+  - Output values are stored in an ocf::hash_map, allowing historical 
+retrieval of past controller states (`get_output_values()`). Usage note 
+not provided but typically used to analyze or replicate control behavior
+  
+- Overloaded operators: Assignment and comparison for object copying with 
+proper checks. See `operator==` comment.
+
+### d_controller ###:
+- **Object**: `d_controller` - Represents a derivative controller that 
+calculates the rate of change (derivative) of the process variable, 
+providing predictive control action based on this value's future impact. 
+Integral and proportional influences are applied.
+  - Members:
+    - `kd (double)`: Derivative gain constant regulating how strongly 
+changes in error affect controller output.
+    - `setpoint (double)`: Desired setpoint for which the rate of change 
+is calculated.
+    - `input_function (ocf::func<double(double)>)`: User-defined function 
+to provide process variable derivatives. Default as nullptr, indicating 
+user input provided
+  - Protected Member Functions (`Derivate`): Calculates derivative using 
+finite difference method with CFDD library.
+    Parameters: `ocf::func<double(double)> f`, for the function of 
+interest; `double x`, current process variable value;
+      and small increment `h` to approximate derivatives
+  - Public Functions (`set()`, getters): Set controller gains, setpoint, 
+compute derivative values directly or from another instance.
+    Parameters: None (constructors initialize default settings)
+  
+- Member functions:
+  - Compute the instantaneous rate of change using `Derivate` and apply 
+correction based on proportional/integral actions. Returns double for 
+controller output at current time point.
+  - Overloaded operators similar to those in `p_controller`, allowing 
+assignment from other instances with checks (see comments).
+
+### block_controller ###:
+- **Object**: `block_controller` - Manages a combination of p, i, and d 
+controllers based on the specified state form.
+  - Members:
+    - `state_form`: Uses an enumerated type defined in "udt/bfs.hpp" to 
+specify controller configuration (series or parallel).
+    This is not explicitly described but typically would affect how 
+of individual controllers are combined within the class methods.
+  - Public Functions:
+    Constructors and assignment operators initialize default states, 
+setters for parameters (`set()`), reset functionality. All take 
+controller instances as arguments or directly assign values to their 
+attributes (see `state_form` initialization). Not detailed in snippet 
+provided but expected implementation would handle switching between 
+series/parallel configurations.
+
+## FUNCTIONS ##:
+**Note on functions descriptions and code is based only within the given 
+C++ file, "control.hpp". Additional external dependencies or behavior not 
+included are beyond this scope of documentation.
+- Functions for setting attributes (`reset_input_function`, `set`) were 
+added to individual controller classes as constructors where possible; 
+details outside these files will impact usage and understanding.
+
+```cpp
+// p_controller.hpp content related to the constructor, reset methods, 
+setter/getters etc., not shown in full for brevity but summarized above
+class msl::p_controller { ... }
+```
+- Classes `i_controller` and `d_controller` follow a similar pattern with 
+respects their respective roles.
+- Operator overloads allow assignment of values between controllers, 
+enabling dynamic changes to controller strategies during runtime. 
+Comparisons should be made using the equality operator (`operator==`). 
+Resets are typically done via constructors or specific reset methods (not 
+shown in full).
+
+## CODE ##:
+```cpp
+// Inclusion of headers and namespace declaration omitted for brevity.
+#pragma once // Ensures single inclusion to prevent multiple definition 
+errors
+...
+namespace msl { ... }
+```
+*Note on the code snippet provided that due to lack of full context, 
+descriptions are limited. The actual implementation details like error 
+handling or specific numerical method choices depend upon additional 
+portions not included here.*
+

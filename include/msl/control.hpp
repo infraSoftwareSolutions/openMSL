@@ -1,13 +1,3 @@
-#pragma once
-#ifndef OPENMSL___MSL___PID_HPP
-#define OPENMSL___MSL___PID_HPP
-#include "udt/core/bfs.hpp"
-#include "numerical.hpp"
-#include "cfrost/structure.h"
-#include <map>
-#include <vector>
-#include <functional>
-
 /**
  * @file control.hpp
  * @brief This file contains the implementation of the P, I, and D controllers, as well as a block controller that can combine them in series or parallel.
@@ -16,6 +6,15 @@
  * @author Ali Lafi
  * @date 2024-06
  */
+
+#include "udt/bfs.hpp"
+#include "numerical.hpp"
+#include "cfrost/structure.h"
+#include <functional>
+
+#pragma once
+#ifndef OPENMSL___MSL___PID_HPP
+#define OPENMSL___MSL___PID_HPP
 
 namespace msl
 {
@@ -28,8 +27,8 @@ namespace msl
     private:
         double kp = 0.0;
         double setpoint = 0.0;
-        func<double(double)> input_function;
-        hash_map<double, double> output_values;
+        ocf::func<double(double)> input_function;
+        ocf::hash_map<double, double> output_values;
 
     public:
         p_controller() noexcept : 
@@ -44,7 +43,7 @@ namespace msl
         output_values(other.output_values) {}
         
         p_controller(double Kp, double Setpoint,
-        func<double(double)> InputFunction) noexcept : 
+        ocf::func<double(double)> InputFunction) noexcept : 
         kp(Kp), 
         setpoint(Setpoint),
         input_function(InputFunction) {}
@@ -57,7 +56,7 @@ namespace msl
             output_values.clear();
         }
         
-        inline void reset_input_function(func<double(double)> InputFunction) noexcept { input_function = InputFunction; }
+        inline void reset_input_function(ocf::func<double(double)> InputFunction) noexcept { input_function = InputFunction; }
         
         inline void reset_kp(double Kp) noexcept { kp = Kp; }
 
@@ -66,7 +65,7 @@ namespace msl
         inline void set(
             double Kp, 
             double Setpoint,
-            func<double(double)> InputFunction) noexcept
+            ocf::func<double(double)> InputFunction) noexcept
         {
             kp = Kp;
             setpoint = Setpoint;
@@ -77,7 +76,7 @@ namespace msl
         
         inline constexpr double get_setpoint() const noexcept { return setpoint; }
 
-        inline func<double(double)> get_input_function() const noexcept { return input_function; }
+        inline ocf::func<double(double)> get_input_function() const noexcept { return input_function; }
         
         inline double compute(double time) noexcept
         {
@@ -97,7 +96,7 @@ namespace msl
             }
         }
 
-        inline const hash_map<double, double> &get_output_values() const noexcept { return output_values; }
+        inline const ocf::hash_map<double, double> &get_output_values() const noexcept { return output_values; }
         
         inline bool is_empty() const noexcept
         {
@@ -109,7 +108,7 @@ namespace msl
         
         inline bool operator!=(const p_controller &other) noexcept { return !(*this == other); }
         
-        inline void operator=(func<double(double)> InputFunction) noexcept { input_function = InputFunction; }
+        inline void operator=(ocf::func<double(double)> InputFunction) noexcept { input_function = InputFunction; }
         
         inline void operator=(const p_controller &other) noexcept
         {
@@ -156,8 +155,8 @@ namespace msl
     private:
         double ki = 0.0;
         double setpoint = 0.0;
-        func<double(double)> input_function;
-        hash_map<double, double> output_values;
+        ocf::func<double(double)> input_function;
+        ocf::hash_map<double, double> output_values;
 
     public:
         i_controller() noexcept : 
@@ -172,7 +171,7 @@ namespace msl
         output_values(other.output_values) {}
 
         i_controller(double Ki, double Setpoint,
-        func<double(double)> InputFunction) noexcept : 
+        ocf::func<double(double)> InputFunction) noexcept : 
         ki(Ki), 
         setpoint(Setpoint),
         input_function(InputFunction) {}
@@ -185,7 +184,7 @@ namespace msl
             output_values.clear();
         }
 
-        inline void reset_input_function(func<double(double)> InputFunction) noexcept { input_function = InputFunction; }
+        inline void reset_input_function(ocf::func<double(double)> InputFunction) noexcept { input_function = InputFunction; }
         
         inline void reset_ki(double Ki) noexcept { ki = Ki; }
         
@@ -194,7 +193,7 @@ namespace msl
         inline constexpr double get_ki() const noexcept { return ki; }
 
         inline void set(double Ki, double Setpoint,
-            func<double(double)> InputFunction) noexcept
+            ocf::func<double(double)> InputFunction) noexcept
         {
             ki = Ki;
             setpoint = Setpoint;
@@ -203,7 +202,7 @@ namespace msl
 
         inline constexpr double get_setpoint() const noexcept { return setpoint; }
         
-        inline func<double(double)> get_input_function() const noexcept { return input_function; }
+        inline ocf::func<double(double)> get_input_function() const noexcept { return input_function; }
 
         inline double compute(double time) noexcept
         {
@@ -221,7 +220,7 @@ namespace msl
                 compute(t);
         }
 
-        inline const hash_map<double, double> &get_output_values() const noexcept { return output_values; }
+        inline const ocf::hash_map<double, double> &get_output_values() const noexcept { return output_values; }
 
         inline bool is_empty() const noexcept
         {
@@ -231,7 +230,7 @@ namespace msl
                    (output_values.empty());
         }
 
-        inline void operator=(func<double(double)> InputFunction) noexcept { input_function = InputFunction; }
+        inline void operator=(ocf::func<double(double)> InputFunction) noexcept { input_function = InputFunction; }
 
         inline void operator=(const i_controller &other) noexcept
         {
@@ -280,11 +279,11 @@ namespace msl
     private:
         double kd = 0.0;
         double setpoint = 0.0;
-        func<double(double)> input_function;
-        hash_map<double, double> output_values;
+        ocf::func<double(double)> input_function;
+        ocf::hash_map<double, double> output_values;
 
     protected:
-        double Derivate(func<double(double)> f, double x, double h)
+        double Derivate(ocf::func<double(double)> f, double x, double h)
         {
             CFDD<true> derivator;
             derivator.set_value(f, h);
@@ -304,13 +303,13 @@ namespace msl
         output_values(other.output_values) {}
         
         d_controller(double Kd, double Setpoint,
-        func<double(double)> InputFunction) noexcept : 
+        ocf::func<double(double)> InputFunction) noexcept : 
         kd(Kd), 
         setpoint(Setpoint),
         input_function(InputFunction) {}
         
         inline void set(double Kd, double Setpoint,
-            func<double(double)> InputFunction) noexcept
+            ocf::func<double(double)> InputFunction) noexcept
         {
             kd = Kd;
             setpoint = Setpoint;
@@ -321,7 +320,7 @@ namespace msl
         
         inline constexpr double get_setpoint() const noexcept { return setpoint; }
         
-        inline func<double(double)> get_input_function() const noexcept { return input_function; }
+        inline ocf::func<double(double)> get_input_function() const noexcept { return input_function; }
         
         inline procedure(reset) noexcept
         {
@@ -335,7 +334,7 @@ namespace msl
 
         inline void reset_setpoint(double Setpoint) noexcept { setpoint = Setpoint; }
         
-        inline void reset_input_function(func<double(double)> InputFunction) noexcept { input_function = InputFunction; }
+        inline void reset_input_function(ocf::func<double(double)> InputFunction) noexcept { input_function = InputFunction; }
 
         inline double compute(double time) noexcept
         {
@@ -353,7 +352,7 @@ namespace msl
                 compute(t);
         }
 
-        inline const hash_map<double, double> &get_output_values() const noexcept { return output_values; }
+        inline const ocf::hash_map<double, double> &get_output_values() const noexcept { return output_values; }
         
         inline bool is_empty() const noexcept
         {
@@ -363,7 +362,7 @@ namespace msl
                    (output_values.empty());
         }
 
-        inline void operator=(func<double(double)> InputFunction) noexcept { input_function = InputFunction; }
+        inline void operator=(ocf::func<double(double)> InputFunction) noexcept { input_function = InputFunction; }
 
         inline void operator=(const d_controller &other) noexcept
         {
@@ -435,4 +434,5 @@ namespace msl
         }
     };
 }
+
 #endif // OPENMSL___MSL___PID_HPP

@@ -1,24 +1,25 @@
-#pragma once
-#ifndef OPENMSL___MSL___STATICS_HPP
-#define OPENMSL___MSL___STATICS_HPP
-#include <iostream>
-#include <vector>
-#include <string>
-#include <cmath>
-#include <sstream>
-
 /**
  * @file statics.hpp
  * @brief A header file containing static functions and a class for handling Cartesian vectors and forces.
- * This file defines a set of mathematical functions for vector operations, as well as a class `CartesianVector`
+ * This file defines a set of mathematical functions for vector operations, as well as a class `vector`
  * that encapsulates the properties and operations of Cartesian vectors and forces. The class provides methods for
  * parsing vector strings, calculating resultant magnitudes, angles, and performing arithmetic operations on vectors.
  * The functions and class are designed to be used in the context of engineering statics problems, where forces and vectors
  * are commonly represented in Cartesian form. The code is written in C++23 and follows best practices for exception safety and performance.
  * @note The functions and methods in this file are marked as `noexcept` to indicate that they do not throw exceptions, ensuring strong exception safety guarantees.
  * @author Ali Lafi
- * @date [Date]
+ * @date 2024-06
  */
+
+#include <iostream>
+#include <vector>
+#include <string>
+#include <cmath>
+#include <sstream>
+
+#pragma once
+#ifndef OPENMSL___MSL___STATICS_HPP
+#define OPENMSL___MSL___STATICS_HPP
 
 namespace msl
 {
@@ -44,7 +45,7 @@ namespace msl
     constexpr double thataSineLaw(double Fr, double F, double Thata) noexcept { return todegrees(asin((F * sin(toRadians(Thata))) / Fr)); }
     
     /// @brief Class to handle Cartesian Vectors and Forces
-    class CartesianVector
+    class vector
     {
     private:
         double x = 0, y = 0, z = 0, F = 0;
@@ -96,12 +97,12 @@ namespace msl
 
     public:
         /// @brief Default constructor
-        CartesianVector() = default;
+        vector() = default;
 
         /// @brief Constructor for position vector and scalar force
         /// @param rStr the position vector in string form
         /// @param force the scalar force
-        CartesianVector(const std::string &rStr, double force) noexcept
+        vector(const std::string &rStr, double force) noexcept
         {
             set_RVector(rStr, force);
         }
@@ -112,7 +113,7 @@ namespace msl
          * @note Example of forceStr: "3i+4j+5k"
          * @throw none exception guarantee: noexcept.
          */
-        CartesianVector(const std::string &forceStr) noexcept
+        vector(const std::string &forceStr) noexcept
         {
             set_CartesianForce(forceStr);
         }
@@ -125,7 +126,7 @@ namespace msl
          * @param force the scalar force
          * @throw none exception guarantee: noexcept.
          */
-        CartesianVector(double xVal, double yVal, double zVal, double force) noexcept
+        vector(double xVal, double yVal, double zVal, double force) noexcept
         {
             x = xVal;
             y = yVal;
@@ -142,10 +143,10 @@ namespace msl
 
         /**
          * @brief Copy constructor
-         * @param other the other CartesianVector to copy from
+         * @param other the other vector to copy from
          * @throw none exception guarantee: noexcept.
          */
-        CartesianVector(const CartesianVector &other) noexcept
+        vector(const vector &other) noexcept
         {
             x = other.x;
             y = other.y;
@@ -251,11 +252,11 @@ namespace msl
         constexpr std::string get_RVector() const noexcept { return "(" + std::to_string(x) + "i)+(" + std::to_string(y) + "j)+(" + std::to_string(z) + "k)"; }
 
         /**
-         * @brief Overloaded arithmetic operators for CartesianVector
+         * @brief Overloaded arithmetic operators for vector
          * @note These operators modify the current object in place.
          * @throw none exception guarantee: noexcept.
          */
-        void operator+=(const CartesianVector &other) noexcept
+        void operator+=(const vector &other) noexcept
         {
             Fx += other.Fx;
             Fy += other.Fy;
@@ -268,7 +269,7 @@ namespace msl
         }
 
         /**
-         * @brief Overloaded arithmetic operators for CartesianVector
+         * @brief Overloaded arithmetic operators for vector
          * @note These operators modify the current object in place.
          * @throw none exception guarantee: noexcept.
          */
@@ -285,11 +286,11 @@ namespace msl
         }
 
         /**
-         * @brief Overloaded arithmetic operators for CartesianVector
+         * @brief Overloaded arithmetic operators for vector
          * @note These operators modify the current object in place.
          * @throw none exception guarantee: noexcept.
          */
-        void operator-=(const CartesianVector &other) noexcept
+        void operator-=(const vector &other) noexcept
         {
             Fx -= other.Fx;
             Fy -= other.Fy;
@@ -302,7 +303,7 @@ namespace msl
         }
 
         /**
-         * @brief Overloaded arithmetic operators for CartesianVector
+         * @brief Overloaded arithmetic operators for vector
          * @note These operators modify the current object in place.
          * @throw none exception guarantee: noexcept.
          */
@@ -319,11 +320,11 @@ namespace msl
         }
 
         /**
-         * @brief Overloaded arithmetic operators for CartesianVector
+         * @brief Overloaded arithmetic operators for vector
          * @note These operators modify the current object in place.
          * @throw none exception guarantee: noexcept.
          */
-        void operator*=(const CartesianVector &other) noexcept
+        void operator*=(const vector &other) noexcept
         {
             Fx *= other.Fx;
             Fy *= other.Fy;
@@ -336,7 +337,7 @@ namespace msl
         }
 
         /**
-         * @brief Overloaded arithmetic operators for CartesianVector
+         * @brief Overloaded arithmetic operators for vector
          * @note These operators modify the current object in place.
          * @throw none exception guarantee: noexcept.
          */
@@ -353,11 +354,11 @@ namespace msl
         }
 
         /**
-         * @brief Overloaded arithmetic operators for CartesianVector
+         * @brief Overloaded arithmetic operators for vector
          * @note These operators modify the current object in place.
          * @throw none exception guarantee: noexcept.
          */
-        void operator/=(const CartesianVector &other) noexcept
+        void operator/=(const vector &other) noexcept
         {
             Fx /= other.Fx;
             Fy /= other.Fy;
@@ -370,7 +371,7 @@ namespace msl
         }
 
         /**
-         * @brief Overloaded arithmetic operators for CartesianVector
+         * @brief Overloaded arithmetic operators for vector
          * @note These operators modify the current object in place.
          * @throw none exception guarantee: noexcept.
          */
@@ -387,11 +388,11 @@ namespace msl
         }
 
         /**
-         * @brief Overloaded arithmetic operators for CartesianVector
+         * @brief Overloaded arithmetic operators for vector
          * @note These operators modify the current object in place.
          * @throw none exception guarantee: noexcept.
          */
-        void operator=(const CartesianVector &other) noexcept
+        void operator=(const vector &other) noexcept
         {
             x = other.x;
             y = other.y;
